@@ -1,0 +1,345 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CB254F971DCD9A3C001B2881 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB254F961DCD9A3C001B2881 /* AppDelegate.swift */; };
+		CB254F9C1DCD9A3C001B2881 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB254F9A1DCD9A3C001B2881 /* Main.storyboard */; };
+		CB254F9E1DCD9A3C001B2881 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB254F9D1DCD9A3C001B2881 /* Assets.xcassets */; };
+		CB254FA11DCD9A3C001B2881 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB254F9F1DCD9A3C001B2881 /* LaunchScreen.storyboard */; };
+		CB254FAB1DCD9DC1001B2881 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB254FAA1DCD9DC1001B2881 /* SWRevealViewController.m */; };
+		CB254FAE1DCDA3C6001B2881 /* SlideMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB254FAD1DCDA3C6001B2881 /* SlideMenuController.swift */; };
+		CB254FB11DCDC250001B2881 /* FontViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB254FB01DCDC250001B2881 /* FontViewController.swift */; };
+		CB254FB31DCDEC5A001B2881 /* QRCodeReadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB254FB21DCDEC5A001B2881 /* QRCodeReadController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		CB254F931DCD9A3C001B2881 /* Lunttery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lunttery.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB254F961DCD9A3C001B2881 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		CB254F9B1DCD9A3C001B2881 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		CB254F9D1DCD9A3C001B2881 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CB254FA01DCD9A3C001B2881 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		CB254FA21DCD9A3C001B2881 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CB254FA81DCD9DC1001B2881 /* Lunttery-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Lunttery-Bridging-Header.h"; sourceTree = "<group>"; };
+		CB254FA91DCD9DC1001B2881 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		CB254FAA1DCD9DC1001B2881 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		CB254FAD1DCDA3C6001B2881 /* SlideMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideMenuController.swift; sourceTree = "<group>"; };
+		CB254FB01DCDC250001B2881 /* FontViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontViewController.swift; sourceTree = "<group>"; };
+		CB254FB21DCDEC5A001B2881 /* QRCodeReadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeReadController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CB254F901DCD9A3C001B2881 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CB254F8A1DCD9A3C001B2881 = {
+			isa = PBXGroup;
+			children = (
+				CB254F951DCD9A3C001B2881 /* Lunttery */,
+				CB254F941DCD9A3C001B2881 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CB254F941DCD9A3C001B2881 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CB254F931DCD9A3C001B2881 /* Lunttery.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CB254F951DCD9A3C001B2881 /* Lunttery */ = {
+			isa = PBXGroup;
+			children = (
+				CB254FAF1DCDC1D1001B2881 /* ViewControllers */,
+				CB254FAC1DCD9DC8001B2881 /* SWRevealViewController */,
+				CB254F961DCD9A3C001B2881 /* AppDelegate.swift */,
+				CB254F9A1DCD9A3C001B2881 /* Main.storyboard */,
+				CB254F9D1DCD9A3C001B2881 /* Assets.xcassets */,
+				CB254F9F1DCD9A3C001B2881 /* LaunchScreen.storyboard */,
+				CB254FA21DCD9A3C001B2881 /* Info.plist */,
+			);
+			path = Lunttery;
+			sourceTree = "<group>";
+		};
+		CB254FAC1DCD9DC8001B2881 /* SWRevealViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CB254FA91DCD9DC1001B2881 /* SWRevealViewController.h */,
+				CB254FAA1DCD9DC1001B2881 /* SWRevealViewController.m */,
+				CB254FA81DCD9DC1001B2881 /* Lunttery-Bridging-Header.h */,
+			);
+			name = SWRevealViewController;
+			sourceTree = "<group>";
+		};
+		CB254FAF1DCDC1D1001B2881 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				CB254FAD1DCDA3C6001B2881 /* SlideMenuController.swift */,
+				CB254FB01DCDC250001B2881 /* FontViewController.swift */,
+				CB254FB21DCDEC5A001B2881 /* QRCodeReadController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CB254F921DCD9A3C001B2881 /* Lunttery */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CB254FA51DCD9A3C001B2881 /* Build configuration list for PBXNativeTarget "Lunttery" */;
+			buildPhases = (
+				CB254F8F1DCD9A3C001B2881 /* Sources */,
+				CB254F901DCD9A3C001B2881 /* Frameworks */,
+				CB254F911DCD9A3C001B2881 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Lunttery;
+			productName = Lunttery;
+			productReference = CB254F931DCD9A3C001B2881 /* Lunttery.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CB254F8B1DCD9A3C001B2881 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0810;
+				LastUpgradeCheck = 0810;
+				ORGANIZATIONNAME = Ollie;
+				TargetAttributes = {
+					CB254F921DCD9A3C001B2881 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = 8H7X36TF25;
+						LastSwiftMigration = 0810;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = CB254F8E1DCD9A3C001B2881 /* Build configuration list for PBXProject "Lunttery" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CB254F8A1DCD9A3C001B2881;
+			productRefGroup = CB254F941DCD9A3C001B2881 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CB254F921DCD9A3C001B2881 /* Lunttery */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CB254F911DCD9A3C001B2881 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB254FA11DCD9A3C001B2881 /* LaunchScreen.storyboard in Resources */,
+				CB254F9E1DCD9A3C001B2881 /* Assets.xcassets in Resources */,
+				CB254F9C1DCD9A3C001B2881 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CB254F8F1DCD9A3C001B2881 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB254F971DCD9A3C001B2881 /* AppDelegate.swift in Sources */,
+				CB254FB11DCDC250001B2881 /* FontViewController.swift in Sources */,
+				CB254FB31DCDEC5A001B2881 /* QRCodeReadController.swift in Sources */,
+				CB254FAE1DCDA3C6001B2881 /* SlideMenuController.swift in Sources */,
+				CB254FAB1DCD9DC1001B2881 /* SWRevealViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		CB254F9A1DCD9A3C001B2881 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CB254F9B1DCD9A3C001B2881 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		CB254F9F1DCD9A3C001B2881 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CB254FA01DCD9A3C001B2881 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		CB254FA31DCD9A3C001B2881 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		CB254FA41DCD9A3C001B2881 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CB254FA61DCD9A3C001B2881 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = 8H7X36TF25;
+				INFOPLIST_FILE = Lunttery/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = co.alphacamp.Lunttery;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Lunttery/Lunttery-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		CB254FA71DCD9A3C001B2881 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = 8H7X36TF25;
+				INFOPLIST_FILE = Lunttery/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = co.alphacamp.Lunttery;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Lunttery/Lunttery-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CB254F8E1DCD9A3C001B2881 /* Build configuration list for PBXProject "Lunttery" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB254FA31DCD9A3C001B2881 /* Debug */,
+				CB254FA41DCD9A3C001B2881 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CB254FA51DCD9A3C001B2881 /* Build configuration list for PBXNativeTarget "Lunttery" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB254FA61DCD9A3C001B2881 /* Debug */,
+				CB254FA71DCD9A3C001B2881 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CB254F8B1DCD9A3C001B2881 /* Project object */;
+}
