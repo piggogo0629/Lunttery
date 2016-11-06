@@ -13,7 +13,7 @@
 		CB254FA11DCD9A3C001B2881 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB254F9F1DCD9A3C001B2881 /* LaunchScreen.storyboard */; };
 		CB254FAB1DCD9DC1001B2881 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB254FAA1DCD9DC1001B2881 /* SWRevealViewController.m */; };
 		CB254FAE1DCDA3C6001B2881 /* SlideMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB254FAD1DCDA3C6001B2881 /* SlideMenuController.swift */; };
-		CB254FB11DCDC250001B2881 /* FontViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB254FB01DCDC250001B2881 /* FontViewController.swift */; };
+		CB254FB11DCDC250001B2881 /* FrontViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB254FB01DCDC250001B2881 /* FrontViewController.swift */; };
 		CB254FB31DCDEC5A001B2881 /* QRCodeReadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB254FB21DCDEC5A001B2881 /* QRCodeReadController.swift */; };
 /* End PBXBuildFile section */
 
@@ -28,7 +28,7 @@
 		CB254FA91DCD9DC1001B2881 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		CB254FAA1DCD9DC1001B2881 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		CB254FAD1DCDA3C6001B2881 /* SlideMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideMenuController.swift; sourceTree = "<group>"; };
-		CB254FB01DCDC250001B2881 /* FontViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontViewController.swift; sourceTree = "<group>"; };
+		CB254FB01DCDC250001B2881 /* FrontViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrontViewController.swift; sourceTree = "<group>"; };
 		CB254FB21DCDEC5A001B2881 /* QRCodeReadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeReadController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -87,7 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				CB254FAD1DCDA3C6001B2881 /* SlideMenuController.swift */,
-				CB254FB01DCDC250001B2881 /* FontViewController.swift */,
+				CB254FB01DCDC250001B2881 /* FrontViewController.swift */,
 				CB254FB21DCDEC5A001B2881 /* QRCodeReadController.swift */,
 			);
 			name = ViewControllers;
@@ -168,7 +168,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB254F971DCD9A3C001B2881 /* AppDelegate.swift in Sources */,
-				CB254FB11DCDC250001B2881 /* FontViewController.swift in Sources */,
+				CB254FB11DCDC250001B2881 /* FrontViewController.swift in Sources */,
 				CB254FB31DCDEC5A001B2881 /* QRCodeReadController.swift in Sources */,
 				CB254FAE1DCDA3C6001B2881 /* SlideMenuController.swift in Sources */,
 				CB254FAB1DCD9DC1001B2881 /* SWRevealViewController.m in Sources */,
@@ -237,7 +237,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -280,7 +280,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -338,6 +338,7 @@
 				CB254FA71DCD9A3C001B2881 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

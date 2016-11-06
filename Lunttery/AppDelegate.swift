@@ -18,11 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         // 修改整個App導覽列文字的顏色，字型
-        let textForegroundColor = UIColor(red: 255.0/255.0, green: 102.0/255.0, blue: 102.0/255.0, alpha: 1.0)
-        let textFont = UIFont.systemFont(ofSize: 28, weight: UIFontWeightSemibold)
-        let textArttribute = [NSForegroundColorAttributeName: textForegroundColor, NSFontAttributeName: textFont]
+        //let textForegroundColor = UIColor(red: 255.0/255.0, green: 102.0/255.0, blue: 102.0/255.0, alpha: 1.0)
+        //let textFont = UIFont.systemFont(ofSize: 28, weight: UIFontWeightSemibold)
+        //let textFont = UIFont(name: ".PingFangTC-Semibold", size: 28)
+        //let textArttribute = [NSForegroundColorAttributeName: textForegroundColor, NSFontAttributeName: textFont]
         
-        UINavigationBar.appearance().titleTextAttributes = textArttribute
+        //UINavigationBar.appearance().titleTextAttributes = textArttribute
         
         //變更狀態欄樣式
         //1.IOS允許開發者覆寫preferredStatusStyle方法來控制任一viewController的狀態欄樣式

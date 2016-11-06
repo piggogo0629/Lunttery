@@ -19,12 +19,22 @@ class QRCodeReadController: UIViewController, AVCaptureMetadataOutputObjectsDele
     @IBOutlet weak var QRCodeMessageLabel: UILabel!
     
     //MARK:- Variables
-    //需要這3個類別的變數
+    //QRCode Reader需要這3個類別的變數
     var captureSession: AVCaptureSession?
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     var qrCodeFrameView: UIView?
     
+    //MARK:- @IBAction
+    @IBAction func close(_ sender: UIButton) {
+        // 回到FrontView
+        self.revealViewController().performSegue(withIdentifier: "sw_front", sender: nil)
+    }
+    
     //MARK:- self Funcs
+    deinit {
+        print("=====QRCodeReadController deinit=====")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -33,7 +43,16 @@ class QRCodeReadController: UIViewController, AVCaptureMetadataOutputObjectsDele
             
             menuButton.target = self.revealViewController()
             menuButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
+            
+            //self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
+
+        // 修改導覽列文字的顏色，字型
+        let textForegroundColor = UIColor(red: 124.0/255.0, green: 124.0/255.0, blue: 124.0/255.0, alpha: 1.0)
+        //let textFont = UIFont.systemFont(ofSize: 30, weight: UIFontWeightSemibold)
+        let textFont = UIFont(name: ".PingFangTC-Semibold", size: 30)
+        let textArttribute = [NSForegroundColorAttributeName: textForegroundColor, NSFontAttributeName: textFont]
+        self.navigationController?.navigationBar.titleTextAttributes = textArttribute
 
         // 實體化一個AVCaptureSession 物件加上輸入設定來讓AVCaptureDevice順利進行影像擷取
         // 1. 取得 AVCaptureDevice 類別的實體來初始化一個device物件，並提供video作為媒體型態參數
@@ -95,23 +114,22 @@ class QRCodeReadController: UIViewController, AVCaptureMetadataOutputObjectsDele
         // 檢查 metadataObjects 陣列是否為非空值，它至少需包含一個物件
         if metadataObjects == nil || metadataObjects.count == 0 {
             qrCodeFrameView?.frame = CGRect.zero
-            QRCodeMessageLabel.text = "No QR Code is detected"
+            QRCodeMessageLabel.text = "請將 QRCode 置於畫面中央"
             return
         }
         
         // 取得元資料（metadata）物件
-        if let metaDataObj = metadataObjects[0] as? AVMetadataMachineReadableCodeObject {
-            if metaDataObj.type == AVMetadataObjectTypeQRCode {
-                // 倘若發現的原資料與 QR code 原資料相同，更新狀態標籤的文字並設定邊界
-                let barCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metaDataObj) as! AVMetadataMachineReadableCodeObject
-                qrCodeFrameView?.frame = barCodeObject.bounds
-                
-                if barCodeObject.stringValue != nil {
-                    QRCodeMessageLabel.text = barCodeObject.stringValue
-                }
+        let metaDataObj = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
+        if metaDataObj.type == AVMetadataObjectTypeQRCode {
+            // 倘若發現的原資料與 QR code 原資料相同，更新狀態標籤的文字並設定邊界
+            let qrCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metaDataObj) as! AVMetadataMachineReadableCodeObject
+            
+            qrCodeFrameView?.frame = qrCodeObject.bounds
+            
+            if qrCodeObject.stringValue != nil {
+                QRCodeMessageLabel.text = qrCodeObject.stringValue
             }
         }
-        
     }
 
     /*

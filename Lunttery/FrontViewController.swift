@@ -8,9 +8,10 @@
 
 import UIKit
 
-class FontViewController: UIViewController {
+class FrontViewController: UIViewController {
 
     @IBOutlet weak var menuButton: UIBarButtonItem!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,14 +21,16 @@ class FontViewController: UIViewController {
             
             menuButton.target = self.revealViewController()
             menuButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
+            
+            //self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         
         // 修改導覽列文字的顏色，字型
-        //let textForegroundColor = UIColor(red: 255.0/255.0, green: 102.0/255.0, blue: 102.0/255.0, alpha: 1.0)
+        let textForegroundColor = UIColor(red: 255.0/255.0, green: 102.0/255.0, blue: 102.0/255.0, alpha: 1.0)
         //let textFont = UIFont.systemFont(ofSize: 30, weight: UIFontWeightSemibold)
-        //let textArttribute = [NSForegroundColorAttributeName: textForegroundColor, NSFontAttributeName: textFont]
-    
-        //self.navigationController?.navigationBar.titleTextAttributes = textArttribute
+        let textFont = UIFont(name: ".PingFangTC-Semibold", size: 30)
+        let textArttribute = [NSForegroundColorAttributeName: textForegroundColor, NSFontAttributeName: textFont]
+        self.navigationController?.navigationBar.titleTextAttributes = textArttribute
     }
 
     override func didReceiveMemoryWarning() {
