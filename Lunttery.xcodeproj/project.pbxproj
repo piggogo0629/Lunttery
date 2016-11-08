@@ -15,6 +15,8 @@
 		CB254FAE1DCDA3C6001B2881 /* SlideMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB254FAD1DCDA3C6001B2881 /* SlideMenuController.swift */; };
 		CB254FB11DCDC250001B2881 /* FrontViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB254FB01DCDC250001B2881 /* FrontViewController.swift */; };
 		CB254FB31DCDEC5A001B2881 /* QRCodeReadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB254FB21DCDEC5A001B2881 /* QRCodeReadController.swift */; };
+		CB33D1241DD0B064003F495C /* FeedbackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB33D1231DD0B064003F495C /* FeedbackController.swift */; };
+		CB8ED0051DD1ADE900B71357 /* Validate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8ED0041DD1ADE900B71357 /* Validate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		CB254FAD1DCDA3C6001B2881 /* SlideMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideMenuController.swift; sourceTree = "<group>"; };
 		CB254FB01DCDC250001B2881 /* FrontViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrontViewController.swift; sourceTree = "<group>"; };
 		CB254FB21DCDEC5A001B2881 /* QRCodeReadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeReadController.swift; sourceTree = "<group>"; };
+		CB33D1231DD0B064003F495C /* FeedbackController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackController.swift; sourceTree = "<group>"; };
+		CB8ED0041DD1ADE900B71357 /* Validate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +93,8 @@
 				CB254FAD1DCDA3C6001B2881 /* SlideMenuController.swift */,
 				CB254FB01DCDC250001B2881 /* FrontViewController.swift */,
 				CB254FB21DCDEC5A001B2881 /* QRCodeReadController.swift */,
+				CB33D1231DD0B064003F495C /* FeedbackController.swift */,
+				CB8ED0041DD1ADE900B71357 /* Validate.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -169,6 +175,8 @@
 			files = (
 				CB254F971DCD9A3C001B2881 /* AppDelegate.swift in Sources */,
 				CB254FB11DCDC250001B2881 /* FrontViewController.swift in Sources */,
+				CB8ED0051DD1ADE900B71357 /* Validate.swift in Sources */,
+				CB33D1241DD0B064003F495C /* FeedbackController.swift in Sources */,
 				CB254FB31DCDEC5A001B2881 /* QRCodeReadController.swift in Sources */,
 				CB254FAE1DCDA3C6001B2881 /* SlideMenuController.swift in Sources */,
 				CB254FAB1DCD9DC1001B2881 /* SWRevealViewController.m in Sources */,
@@ -237,7 +245,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -280,7 +288,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

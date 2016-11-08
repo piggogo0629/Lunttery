@@ -17,6 +17,9 @@ class QRCodeReadController: UIViewController, AVCaptureMetadataOutputObjectsDele
     @IBOutlet weak var closeButon: UIButton!
     @IBOutlet weak var menuButton: UIBarButtonItem!
     @IBOutlet weak var QRCodeMessageLabel: UILabel!
+    @IBOutlet weak var successImageView: UIImageView!
+    @IBOutlet weak var successLabel: UILabel!
+    
     
     //MARK:- Variables
     //QRCode Reader需要這3個類別的變數
@@ -26,8 +29,18 @@ class QRCodeReadController: UIViewController, AVCaptureMetadataOutputObjectsDele
     
     //MARK:- @IBAction
     @IBAction func close(_ sender: UIButton) {
+        // 將QRCode相關設置清除
+        captureSession?.stopRunning()
+        videoPreviewLayer?.removeFromSuperlayer()
+        qrCodeFrameView?.removeFromSuperview()
+        
+        //顯示成功資訊
+        QRCodeMessageLabel.text = ""
+        view.bringSubview(toFront: successImageView)
+        view.bringSubview(toFront: successLabel)
+        
         // 回到FrontView
-        self.revealViewController().performSegue(withIdentifier: "sw_front", sender: nil)
+        //self.revealViewController().performSegue(withIdentifier: "sw_front", sender: nil)
     }
     
     //MARK:- self Funcs
@@ -47,6 +60,9 @@ class QRCodeReadController: UIViewController, AVCaptureMetadataOutputObjectsDele
             //self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
 
+        //隱藏backBarButtonItem：self.navigationItem.hideBackButton = true
+        self.navigationItem.hidesBackButton = true
+        
         // 修改導覽列文字的顏色，字型
         let textForegroundColor = UIColor(red: 124.0/255.0, green: 124.0/255.0, blue: 124.0/255.0, alpha: 1.0)
         //let textFont = UIFont.systemFont(ofSize: 30, weight: UIFontWeightSemibold)
