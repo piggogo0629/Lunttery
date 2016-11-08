@@ -10,12 +10,8 @@ import Foundation
 
 extension String {
     func isBlank() -> Bool {
-        //if self != nil {
             let trimmed = self.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
             return trimmed.isEmpty
-        //} else {
-        //    return true
-        //}
     }
     
     func isEmail() throws -> Bool {

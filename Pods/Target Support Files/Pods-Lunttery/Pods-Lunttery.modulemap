@@ -1,0 +1,6 @@
+framework module Pods_Lunttery {
+  umbrella header "Pods-Lunttery-umbrella.h"
+
+  export *
+  module * { export * }
+}
