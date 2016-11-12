@@ -32,7 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //    專案 -> target -> Info -> 新增Key:View controller-based status bar appearance,Value:NO
         //UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
         
-        
         return true
     }
 

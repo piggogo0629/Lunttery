@@ -23,8 +23,6 @@ class SlideMenuController: UITableViewController {
         tableView.separatorColor = UIColor.clear
         // 隱藏底下多餘部分
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-        
-        //tableView.allowsSelection = false
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,7 +39,7 @@ class SlideMenuController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 13
+        return 12
     }
     
     /*

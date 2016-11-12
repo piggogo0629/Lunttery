@@ -11,6 +11,7 @@ import UIKit
 class FrontViewController: UIViewController {
 
     @IBOutlet weak var menuButton: UIBarButtonItem!
+    @IBOutlet weak var queryButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +23,8 @@ class FrontViewController: UIViewController {
             menuButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
             
             //self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            
+            //self.performSegue(withIdentifier: "front_to_set", sender: nil)
         }
         
         // 修改導覽列文字的顏色，字型

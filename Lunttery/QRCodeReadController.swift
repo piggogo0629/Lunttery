@@ -8,6 +8,8 @@
 
 import UIKit
 import AVFoundation
+import Alamofire
+import SwiftyJSON
 
 //參考文章：http://www.appcoda.com.tw/qr-code-reader-swift/
 
@@ -20,7 +22,6 @@ class QRCodeReadController: UIViewController, AVCaptureMetadataOutputObjectsDele
     @IBOutlet weak var successImageView: UIImageView!
     @IBOutlet weak var successLabel: UILabel!
     
-    
     //MARK:- Variables
     //QRCode Reader需要這3個類別的變數
     var captureSession: AVCaptureSession?
@@ -29,18 +30,8 @@ class QRCodeReadController: UIViewController, AVCaptureMetadataOutputObjectsDele
     
     //MARK:- @IBAction
     @IBAction func close(_ sender: UIButton) {
-        // 將QRCode相關設置清除
-        captureSession?.stopRunning()
-        videoPreviewLayer?.removeFromSuperlayer()
-        qrCodeFrameView?.removeFromSuperview()
-        
-        //顯示成功資訊
-        QRCodeMessageLabel.text = ""
-        view.bringSubview(toFront: successImageView)
-        view.bringSubview(toFront: successLabel)
-        
         // 回到FrontView
-        //self.revealViewController().performSegue(withIdentifier: "sw_front", sender: nil)
+        self.revealViewController().performSegue(withIdentifier: "sw_front", sender: nil)
     }
     
     //MARK:- self Funcs
@@ -89,7 +80,7 @@ class QRCodeReadController: UIViewController, AVCaptureMetadataOutputObjectsDele
         let captureMetadataOutput = AVCaptureMetadataOutput()
         captureSession?.addOutput(captureMetadataOutput)
         
-        // 4. 設定代理並使用預設的調度佇列來執行回呼（call back
+        // 4. 設定代理並使用預設的調度佇列來執行回呼（call back)
         //    依照Apple的文件，此佇列必須是串列佇列（serial queue）。因此我們使用dispatch_get_main_queue()函數來取得預設的串列佇列。
         captureMetadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
         // 5. 告訴App哪一種元資料是我們感興趣的
@@ -113,10 +104,11 @@ class QRCodeReadController: UIViewController, AVCaptureMetadataOutputObjectsDele
         qrCodeFrameView = UIView()
         let myCustomColor = UIColor(red: 255.0/255.0, green: 102.0/255.0, blue: 102.0/255.0, alpha: 1.0)
         qrCodeFrameView?.layer.borderColor = myCustomColor.cgColor
-        qrCodeFrameView?.layer.borderWidth = 2.5
+        qrCodeFrameView?.layer.borderWidth = 3
         
         view.addSubview(qrCodeFrameView!)
         view.bringSubview(toFront: qrCodeFrameView!)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -144,10 +136,51 @@ class QRCodeReadController: UIViewController, AVCaptureMetadataOutputObjectsDele
             
             if qrCodeObject.stringValue != nil {
                 QRCodeMessageLabel.text = qrCodeObject.stringValue
+                
+                /* 呼叫API */
+                //let qrCodeUrl = ""
+                //let paras: Parameters = ["email": "", "name": ""]
+                //let qrCodeRequest = request(qrCodeUrl, method: .post, parameters: paras, encoding: URLEncoding.default)
+                //debugPrint(qrCodeRequest)
+                //qrCodeRequest.responseJSON(completionHandler: { (response: DataResponse<Any>) in
+                //    switch response.result {
+                //    case .success(let value):
+                //        let returnJSON = JSON(value)
+                
+                // 成功後
+                // 將QRCode相關設置清除
+                self.captureSession?.stopRunning()
+                self.videoPreviewLayer?.removeFromSuperlayer()
+                self.qrCodeFrameView?.removeFromSuperview()
+                // 顯示成功資訊
+                self.QRCodeMessageLabel.text = ""
+                self.view.bringSubview(toFront: successImageView)
+                self.view.bringSubview(toFront: successLabel)
+                //    case .failure(let error):
+                //        self.showAlertWithMessage(alertMessage: "傳送失敗，請再試一次～")
+                //        print("=====\(error.localizedDescription)=====")
+                          
+                //    }
+                //})
             }
         }
     }
 
+    // MARK:- User Defined Method
+    func showAlertWithMessage(alertMessage: String){
+        let alert = UIAlertController(title: "Lunttery", message: "", preferredStyle: UIAlertControllerStyle.alert)
+        
+        // 自定義message font size etc.
+        let textFont = UIFont(name: ".PingFangTC-Regular", size: 15)
+        let attributedStr = NSAttributedString(string: alertMessage, attributes: [NSFontAttributeName: textFont!])
+        
+        alert.setValue(attributedStr, forKey: "attributedMessage")
+        
+        alert.addAction(UIAlertAction(title: "關閉", style: UIAlertActionStyle.default, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     /*
     // MARK: - Navigation
 

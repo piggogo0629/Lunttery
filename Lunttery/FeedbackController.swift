@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class FeedbackController: UIViewController, UITextViewDelegate {
-    
     // How to make UITextView With placeholder Text? -> https://grokswift.com/uitextview-placeholder/
+    
     // MARK:- Variables
     let placeholderText = "Say Something"
-    //var feedBack: Dictionary?
     
     // MARK:- @IBOutlets
     @IBOutlet weak var menuButton: UIBarButtonItem!
@@ -26,11 +27,10 @@ class FeedbackController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var successImageView: UIImageView!
     @IBOutlet weak var successLabel: UILabel!
     
-    // MARK:- @@IBActions
+    // MARK:- @IBActions
     @IBAction func touchDownToCloseKeyboard(_ sender: UIControl) {
-        // 點擊空白區域時，鍵盤自動隱藏：
+        // 點擊空白區域時，鍵盤自動隱藏 -> http://devonios.com/ios-hide-keykeyboard.html
         // 一般此空白區域就是一個UIView，要讓UIView響應點擊（tap）事件，但是要知道響應事件是UIControl的事情，所以我们需要把UIView的class改成UIControl，因为UIControl是UIView的子類別，所以完全可行！那麼這個View就能像UIControl那些元件一樣接收點擊事件了
-        // http://devonios.com/ios-hide-keykeyboard.html
         nameTextField.resignFirstResponder()
         emailTextField.resignFirstResponder()
         feedbackTextView.resignFirstResponder()
@@ -70,21 +70,33 @@ class FeedbackController: UIViewController, UITextViewDelegate {
             showAlertWithMessage(alertMessage: alertMessage)
         } else {
             // 通過驗證 -> call API 傳送資料 ＆ 顯示成功圖片及文字
-            
-            /* API */
-            
-            InfoLabel.isHidden = true
-            nameTextField.isHidden = true
-            emailTextField.isHidden = true
-            feedbackTextView.isHidden = true
-            sendButton.isHidden = true
-            
-            successImageView.isHidden = false
-            successLabel.isHidden = false
-            
-            closeButton.setTitleColor(UIColor.white, for: .normal)
-            closeButton.titleLabel?.font = UIFont(name: ".PingFangTC-Medium", size: 24)
-            closeButton.backgroundColor = UIColor(red: 255.0/255.0, green: 102.0/255.0, blue: 102.0/255.0, alpha: 1.0)
+            /* 呼叫API */
+            //let feedbackUrl = ""
+            //let paras: Parameters = ["name": "", "email": "", "content": ""]
+            //let feedbackRequest = request(feedbackUrl, method: .post, parameters: paras, encoding: URLEncoding.default)
+            //feedbackRequest.responseJSON(completionHandler: { (response: DataResponse<Any>) in
+                //switch response.result {
+                //case .success(let value):
+                    //let returnJSON = JSON(value)
+                    
+                    self.InfoLabel.isHidden = true
+                    self.nameTextField.isHidden = true
+                    self.emailTextField.isHidden = true
+                    self.feedbackTextView.isHidden = true
+                    self.sendButton.isHidden = true
+                    
+                    self.successImageView.isHidden = false
+                    self.successLabel.isHidden = false
+                    
+                    self.closeButton.setTitleColor(UIColor.white, for: .normal)
+                    self.closeButton.titleLabel?.font = UIFont(name: ".PingFangTC-Medium", size: 24)
+                    self.closeButton.backgroundColor = UIColor(red: 255.0/255.0, green: 102.0/255.0, blue: 102.0/255.0, alpha: 1.0)
+                
+                //case .failure(let error):
+                    //self.showAlertWithMessage(alertMessage: "傳送失敗，請再試一次～")
+                    //print("=====\(error.localizedDescription)=====")
+                //}
+            //})
         }
     }
     
@@ -118,19 +130,20 @@ class FeedbackController: UIViewController, UITextViewDelegate {
         let textArttribute = [NSForegroundColorAttributeName: textForegroundColor, NSFontAttributeName: textFont]
         self.navigationController?.navigationBar.titleTextAttributes = textArttribute
         
-        // 調整textField border
+        // 調整nameTextField border
         nameTextField.attributedPlaceholder = NSAttributedString(string: " Name", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
         nameTextField.layer.borderColor = textForegroundColor.cgColor
         nameTextField.layer.borderWidth = 1.5
-        // 顯示textField rightView
+        // 顯示nameTextField rightView
         let userImageView = UIImageView(image: UIImage(named: "user"))
         userImageView.frame = CGRect(x: 0.0, y: 0.0, width: (userImageView.image?.size.width)!, height: (userImageView.image?.size.height)!)
         nameTextField.rightViewMode = .unlessEditing
         nameTextField.rightView = userImageView
-        
+        // 調整emailTextField border
         emailTextField.attributedPlaceholder = NSAttributedString(string: " E-mail", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
         emailTextField.layer.borderColor = textForegroundColor.cgColor
         emailTextField.layer.borderWidth = 1.5
+        // 顯示emailTextField rightView
         let emailImgeView = UIImageView(image: UIImage(named: "inputmail"))
         emailImgeView.frame = CGRect(x: 0.0, y: 0.0, width: (emailImgeView.image?.size.width)!, height: (emailImgeView.image?.size.height)!)
         emailTextField.rightViewMode = .unlessEditing
@@ -213,7 +226,7 @@ class FeedbackController: UIViewController, UITextViewDelegate {
     func showAlertWithMessage(alertMessage: String){
         let alert = UIAlertController(title: "Lunttery", message: "", preferredStyle: UIAlertControllerStyle.alert)
         
-        // 自定義message font size...
+        // 自定義message font size etc.
         let textFont = UIFont(name: ".PingFangTC-Regular", size: 15)
         let attributedStr = NSAttributedString(string: alertMessage, attributes: [NSFontAttributeName: textFont!])
         
@@ -224,9 +237,7 @@ class FeedbackController: UIViewController, UITextViewDelegate {
         self.present(alert, animated: true, completion: nil)
     }
     
-    
     // MARK: - Navigation
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     //override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
