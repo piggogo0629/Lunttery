@@ -90,7 +90,7 @@ class FeedbackController: UIViewController, UITextViewDelegate {
                     
                     self.closeButton.setTitleColor(UIColor.white, for: .normal)
                     self.closeButton.titleLabel?.font = UIFont(name: ".PingFangTC-Medium", size: 24)
-                    self.closeButton.backgroundColor = UIColor(red: 255.0/255.0, green: 102.0/255.0, blue: 102.0/255.0, alpha: 1.0)
+                    self.closeButton.backgroundColor = UIColor(red: 255.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0)
                 
                 //case .failure(let error):
                     //self.showAlertWithMessage(alertMessage: "傳送失敗，請再試一次～")

@@ -11,13 +11,15 @@ import UIKit
 class SettingController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     //MARK:- Variables
-    let priceArray    = ["100元以內", "150元以內", "不限"]
-    let distanceArray = ["10分鐘以內", "15分鐘以內", "不限"]
-    let priceNumArray = [100, 150, 0]
-    let distanceNumArray = [0.7, 1.0, 0.0]
+    let priceArray    = ["100元以內", "150元以內", "300元以內"]
+    let distanceArray = ["10分鐘以內", "15分鐘以內", "30分鐘以內"]
+    let priceNumArray = [101, 151, 301]
+    let distanceNumArray = [0.67, 1.0, 0.0]
     var styleSelected = [Int: Bool]()
     var myUserSetting: UserSetting? = nil
-    
+    var mySelectedCount = 0
+    var isLeastOne = false
+    var leastOneTag = 0
     var myDefaults = UserDefaults.standard
     let myCalendar = Calendar.current
         
@@ -41,12 +43,41 @@ class SettingController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     }
     
     @IBAction func selectStyle(_ sender: UIButton) {
-        let styleId = sender.tag
-        let selected = !(styleSelected[styleId]!)
-        // set Change
-        styleSelected[styleId] = selected
-        // display button
-        changeButtonDisplay(isSelected: selected, button: sender)
+        if mySelectedCount >= 1 {
+            // 是最後一個且點到一樣的button -> return
+            if isLeastOne == true && sender.tag == leastOneTag {
+                return
+            }
+            
+            let styleId  = sender.tag
+            let selected = !(styleSelected[styleId]!)
+            
+            if selected == true {
+                mySelectedCount += 1
+                // 大於一個 -> isLeastOne = false
+                if mySelectedCount > 1 {
+                    isLeastOne = false
+                }
+            } else {
+                // 只有一個 -> count不變
+                if mySelectedCount == 1 {
+                    mySelectedCount -= 0
+                } else {
+                    mySelectedCount -= 1
+                }
+            }
+            // set Change
+            if isLeastOne == false {
+                styleSelected[styleId] = selected
+                // display button
+                changeButtonDisplay(isSelected: selected, button: sender)
+            }
+            // 最後判斷只有一個時 -> 記錄最後一個button & isLeastOne = true
+            if mySelectedCount == 1 {
+                isLeastOne = true
+                leastOneTag = sender.tag
+            }
+        }
     }
     
     //MARK:- Self func
@@ -94,6 +125,7 @@ class SettingController: UIViewController, UIPickerViewDataSource, UIPickerViewD
                 if i == 6 || i == 7 || i == 8 {
                     // 台式,義式,越式
                     styleSelected.updateValue(true, forKey: i)
+                    mySelectedCount += 1
                 } else {
                     styleSelected.updateValue(false, forKey: i)
                 }
@@ -110,6 +142,12 @@ class SettingController: UIViewController, UIPickerViewDataSource, UIPickerViewD
                 
                 pricePicker.selectRow(pricePickerIndex!, inComponent: 0, animated: true)
                 distancePicker.selectRow(distancePickerIndex!, inComponent: 0, animated: true)
+                
+                for item in styleSelected {
+                    if item.value == true {
+                        mySelectedCount += 1
+                    }
+                }
             }
         }
         
@@ -201,11 +239,15 @@ class SettingController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     //MARK: - User Defined Method
     func changeButtonDisplay(isSelected: Bool, button: UIButton) {
         if isSelected == false {
+            let myGrayColor = UIColor(red: 204.0/255.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1.0)
             button.backgroundColor = UIColor.clear
-            button.setTitleColor(UIColor(red: 204.0/255.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1.0), for: .normal)
+            button.setTitleColor(myGrayColor, for: .normal)
+            button.layer.borderWidth = 1
+            button.layer.borderColor = myGrayColor.cgColor
         } else {
-            button.backgroundColor = UIColor(red: 255.0/255.0, green: 102.0/255.0, blue: 102.0/255.0, alpha: 1.0)
+            button.backgroundColor = UIColor(red: 255.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0)
             button.setTitleColor(UIColor.white, for: .normal)
+            button.layer.borderWidth = 0
         }
     }
     

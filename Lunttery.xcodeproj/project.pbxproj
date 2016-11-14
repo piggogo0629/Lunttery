@@ -18,6 +18,8 @@
 		CB254FB31DCDEC5A001B2881 /* QRCodeReadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB254FB21DCDEC5A001B2881 /* QRCodeReadController.swift */; };
 		CB33D1241DD0B064003F495C /* FeedbackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB33D1231DD0B064003F495C /* FeedbackController.swift */; };
 		CB8ED0051DD1ADE900B71357 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8ED0041DD1ADE900B71357 /* StringExtension.swift */; };
+		CBD0E8371DD997CE00A8D8DA /* MealController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD0E8361DD997CE00A8D8DA /* MealController.swift */; };
+		CBD0E8391DD99F9B00A8D8DA /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD0E8381DD99F9B00A8D8DA /* TestController.swift */; };
 		CBD5ACCC1DD6D09900A70790 /* StyleEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5ACCB1DD6D09900A70790 /* StyleEnum.swift */; };
 		CBD5ACCE1DD74CFD00A70790 /* UserSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5ACCD1DD74CFD00A70790 /* UserSetting.swift */; };
 		CBF9CD321DD3878300758732 /* InitialSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF9CD311DD3878300758732 /* InitialSettingController.swift */; };
@@ -41,6 +43,8 @@
 		CB254FB21DCDEC5A001B2881 /* QRCodeReadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeReadController.swift; sourceTree = "<group>"; };
 		CB33D1231DD0B064003F495C /* FeedbackController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackController.swift; sourceTree = "<group>"; };
 		CB8ED0041DD1ADE900B71357 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		CBD0E8361DD997CE00A8D8DA /* MealController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealController.swift; sourceTree = "<group>"; };
+		CBD0E8381DD99F9B00A8D8DA /* TestController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
 		CBD5ACCB1DD6D09900A70790 /* StyleEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleEnum.swift; sourceTree = "<group>"; };
 		CBD5ACCD1DD74CFD00A70790 /* UserSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSetting.swift; sourceTree = "<group>"; };
 		CBF9CD311DD3878300758732 /* InitialSettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialSettingController.swift; sourceTree = "<group>"; };
@@ -129,6 +133,8 @@
 				CB254FB21DCDEC5A001B2881 /* QRCodeReadController.swift */,
 				CB33D1231DD0B064003F495C /* FeedbackController.swift */,
 				CBF9CD6E1DD4994400758732 /* SettingController.swift */,
+				CBD0E8361DD997CE00A8D8DA /* MealController.swift */,
+				CBD0E8381DD99F9B00A8D8DA /* TestController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -270,11 +276,13 @@
 			files = (
 				CBD5ACCC1DD6D09900A70790 /* StyleEnum.swift in Sources */,
 				CBF9CD6F1DD4994400758732 /* SettingController.swift in Sources */,
+				CBD0E8371DD997CE00A8D8DA /* MealController.swift in Sources */,
 				CB254F971DCD9A3C001B2881 /* AppDelegate.swift in Sources */,
 				CB254FB11DCDC250001B2881 /* FrontViewController.swift in Sources */,
 				CB8ED0051DD1ADE900B71357 /* StringExtension.swift in Sources */,
 				CB33D1241DD0B064003F495C /* FeedbackController.swift in Sources */,
 				CBD5ACCE1DD74CFD00A70790 /* UserSetting.swift in Sources */,
+				CBD0E8391DD99F9B00A8D8DA /* TestController.swift in Sources */,
 				CB254FB31DCDEC5A001B2881 /* QRCodeReadController.swift in Sources */,
 				CBF9CD321DD3878300758732 /* InitialSettingController.swift in Sources */,
 				CB254FAE1DCDA3C6001B2881 /* SlideMenuController.swift in Sources */,

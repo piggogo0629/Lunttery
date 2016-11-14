@@ -102,7 +102,7 @@ class QRCodeReadController: UIViewController, AVCaptureMetadataOutputObjectsDele
         
         // 初始化 QR Code Frame 來突顯 QR code
         qrCodeFrameView = UIView()
-        let myCustomColor = UIColor(red: 255.0/255.0, green: 102.0/255.0, blue: 102.0/255.0, alpha: 1.0)
+        let myCustomColor = UIColor(red: 255.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0)
         qrCodeFrameView?.layer.borderColor = myCustomColor.cgColor
         qrCodeFrameView?.layer.borderWidth = 3
         

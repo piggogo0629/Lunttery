@@ -7,13 +7,15 @@
 //
 
 import UIKit
+import CoreLocation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    var myDefaults = UserDefaults.standard
+    var myLocation: CLLocation?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
@@ -31,6 +33,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //  ->要關閉預設啟用的「View controller-based status bar appearance」: 
         //    專案 -> target -> Info -> 新增Key:View controller-based status bar appearance,Value:NO
         //UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
+        
+        // 記錄是否第一次開啟App
+        if myDefaults.object(forKey: "isFirstLaunch") == nil {
+            let isFirstLaunch: Bool = true
+            myDefaults.set(isFirstLaunch, forKey: "isFirstLaunch")
+        }
+        // 記錄是否第一次按下“一鍵查找”
+        if myDefaults.object(forKey: "isFirstQuery") == nil {
+            let isFirstQuery: Bool = true
+            myDefaults.set(isFirstQuery, forKey: "isFirstQuery")
+        }
         
         return true
     }
