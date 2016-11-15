@@ -9,4 +9,18 @@ target 'Lunttery' do
   pod 'Alamofire','~> 4.0'
   pod 'SwiftyJSON'
   pod 'SDWebImage'
+  pod 'FacebookCore'
+  pod 'FacebookLogin'
+end
+
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        target.build_configurations.each do |config|
+            if config.name != 'Debug'
+                config.build_settings['SWIFT_OPTIMIZATION_LEVEL'] = '-Owholemodule'
+                else
+                config.build_settings['SWIFT_OPTIMIZATION_LEVEL'] = '-Onone'
+            end
+        end
+    end
 end

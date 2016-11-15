@@ -9,6 +9,31 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Bolts.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>FBSDKCoreKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>FBSDKLoginKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>FacebookCore.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>FacebookLogin.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Lunttery.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -27,7 +52,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>87BB61CE50E8A62266A19508AC18313E</key>
+		<key>44CAD6CE523055ED339E87154473A254</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>593E9479C06FB200807D11AB29EB50BD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5B5AC3C06B783F8674FDB4C0F900B56A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7335E9C9689F3B8A16F063A884748533</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -37,12 +77,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A0AE3F3679D141FF9C324AF6ED2FA80C</key>
+		<key>BA31F4487C178955E0BE7D48A8433145</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F7BD8B66AE25A8CE507EDB9C1660ED53</key>
+		<key>DDBCFDE490CDFDABF6F16A26F346932D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DDF761B942A2020F4998EE9E8EC4C36C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F622D9EF71D4C4FADF823B069134F3BC</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0810"
+   LastUpgradeVersion = "0700"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F7BD8B66AE25A8CE507EDB9C1660ED53"
+               BlueprintIdentifier = "BA31F4487C178955E0BE7D48A8433145"
                BuildableName = "Pods_Lunttery.framework"
                BlueprintName = "Pods-Lunttery"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F7BD8B66AE25A8CE507EDB9C1660ED53"
+            BlueprintIdentifier = "BA31F4487C178955E0BE7D48A8433145"
             BuildableName = "Pods_Lunttery.framework"
             BlueprintName = "Pods-Lunttery"
             ReferencedContainer = "container:Pods.xcodeproj">
