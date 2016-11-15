@@ -22,6 +22,7 @@
 		CBD0E8391DD99F9B00A8D8DA /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD0E8381DD99F9B00A8D8DA /* LoginController.swift */; };
 		CBD5ACCC1DD6D09900A70790 /* StyleEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5ACCB1DD6D09900A70790 /* StyleEnum.swift */; };
 		CBD5ACCE1DD74CFD00A70790 /* UserSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5ACCD1DD74CFD00A70790 /* UserSetting.swift */; };
+		CBF38B8E1DDB6D9A00CA2E0C /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF38B8D1DDB6D9A00CA2E0C /* ViewControllerExtension.swift */; };
 		CBF9CD321DD3878300758732 /* InitialSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF9CD311DD3878300758732 /* InitialSettingController.swift */; };
 		CBF9CD6F1DD4994400758732 /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF9CD6E1DD4994400758732 /* SettingController.swift */; };
 /* End PBXBuildFile section */
@@ -47,6 +48,7 @@
 		CBD0E8381DD99F9B00A8D8DA /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		CBD5ACCB1DD6D09900A70790 /* StyleEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleEnum.swift; sourceTree = "<group>"; };
 		CBD5ACCD1DD74CFD00A70790 /* UserSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSetting.swift; sourceTree = "<group>"; };
+		CBF38B8D1DDB6D9A00CA2E0C /* ViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 		CBF9CD311DD3878300758732 /* InitialSettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialSettingController.swift; sourceTree = "<group>"; };
 		CBF9CD6E1DD4994400758732 /* SettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
 		E46A7E2B2B95C92575432C1E /* Pods-Lunttery.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lunttery.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lunttery/Pods-Lunttery.release.xcconfig"; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				CB8ED0041DD1ADE900B71357 /* StringExtension.swift */,
 				CBD5ACCB1DD6D09900A70790 /* StyleEnum.swift */,
 				CBD5ACCD1DD74CFD00A70790 /* UserSetting.swift */,
+				CBF38B8D1DDB6D9A00CA2E0C /* ViewControllerExtension.swift */,
 			);
 			name = SwiftFiles;
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 				CB254FB31DCDEC5A001B2881 /* QRCodeReadController.swift in Sources */,
 				CBF9CD321DD3878300758732 /* InitialSettingController.swift in Sources */,
 				CB254FAE1DCDA3C6001B2881 /* SlideMenuController.swift in Sources */,
+				CBF38B8E1DDB6D9A00CA2E0C /* ViewControllerExtension.swift in Sources */,
 				CB254FAB1DCD9DC1001B2881 /* SWRevealViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

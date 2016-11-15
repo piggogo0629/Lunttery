@@ -67,13 +67,13 @@ class FeedbackController: UIViewController, UITextViewDelegate {
         }
 
         if alertMessage.isBlank() == false {
-            showAlertWithMessage(alertMessage: alertMessage)
+            self.showAlertWithMessage(alertMessage: alertMessage)
         } else {
             // 通過驗證 -> call API 傳送資料 ＆ 顯示成功圖片及文字
             /* 呼叫API */
             //let feedbackUrl = ""
             //let paras: Parameters = ["name": "", "email": "", "content": ""]
-            //let feedbackRequest = request(feedbackUrl, method: .post, parameters: paras, encoding: URLEncoding.default)
+            //let feedbackRequest = request(feedbackUrl, method: .post, parameters: paras, encoding: URLEncoding.default, headers: nil)
             //feedbackRequest.responseJSON(completionHandler: { (response: DataResponse<Any>) in
                 //switch response.result {
                 //case .success(let value):
@@ -221,20 +221,6 @@ class FeedbackController: UIViewController, UITextViewDelegate {
         DispatchQueue.main.async {
             textView.selectedRange = NSRange(location: 0, length: 0)
         }
-    }
-    
-    func showAlertWithMessage(alertMessage: String){
-        let alert = UIAlertController(title: "Lunttery", message: "", preferredStyle: UIAlertControllerStyle.alert)
-        
-        // 自定義message font size etc.
-        let textFont = UIFont(name: ".PingFangTC-Regular", size: 15)
-        let attributedStr = NSAttributedString(string: alertMessage, attributes: [NSFontAttributeName: textFont!])
-        
-        alert.setValue(attributedStr, forKey: "attributedMessage")
-        
-        alert.addAction(UIAlertAction(title: "關閉", style: UIAlertActionStyle.default, handler: nil))
-        
-        self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Navigation

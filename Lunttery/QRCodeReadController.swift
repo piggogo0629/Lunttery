@@ -15,6 +15,11 @@ import SwiftyJSON
 
 // 實作AVCaptureMetadataOutputObjectsDelegate 協定
 class QRCodeReadController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
+    
+    //MARK:- Variables
+    let myDefaults = UserDefaults.standard
+    var myUserAuth: [String: Any]!
+    
     //MARK:- @IBOutlet
     @IBOutlet weak var closeButon: UIButton!
     @IBOutlet weak var menuButton: UIBarButtonItem!
@@ -50,7 +55,7 @@ class QRCodeReadController: UIViewController, AVCaptureMetadataOutputObjectsDele
             
             //self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
-
+        
         //隱藏backBarButtonItem：self.navigationItem.hideBackButton = true
         self.navigationItem.hidesBackButton = true
         
@@ -61,6 +66,16 @@ class QRCodeReadController: UIViewController, AVCaptureMetadataOutputObjectsDele
         let textArttribute = [NSForegroundColorAttributeName: textForegroundColor, NSFontAttributeName: textFont]
         self.navigationController?.navigationBar.titleTextAttributes = textArttribute
 
+        // label點擊開啟login畫面
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(goToLogin(gesture:)))
+        QRCodeMessageLabel.isUserInteractionEnabled = false // 預設先不啟用
+        QRCodeMessageLabel.addGestureRecognizer(tapGesture)
+        
+        // 讀取使用者登入資訊
+        if myDefaults.object(forKey: "user_Auth") != nil {
+            myUserAuth = myDefaults.object(forKey: "user_Auth") as! [String : Any]
+        }
+        
         // 實體化一個AVCaptureSession 物件加上輸入設定來讓AVCaptureDevice順利進行影像擷取
         // 1. 取得 AVCaptureDevice 類別的實體來初始化一個device物件，並提供video作為媒體型態參數
         let captureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
@@ -108,12 +123,19 @@ class QRCodeReadController: UIViewController, AVCaptureMetadataOutputObjectsDele
         
         view.addSubview(qrCodeFrameView!)
         view.bringSubview(toFront: qrCodeFrameView!)
-        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // 讀取使用者登入資訊
+        if myDefaults.object(forKey: "user_Auth") != nil {
+            myUserAuth = myDefaults.object(forKey: "user_Auth") as! [String : Any]
+        }
     }
     
     //MARK:- AVCaptureMetadataOutputObjectsDelegate protocol
@@ -123,6 +145,7 @@ class QRCodeReadController: UIViewController, AVCaptureMetadataOutputObjectsDele
         if metadataObjects == nil || metadataObjects.count == 0 {
             qrCodeFrameView?.frame = CGRect.zero
             QRCodeMessageLabel.text = "請將 QRCode 置於畫面中央"
+            QRCodeMessageLabel.isUserInteractionEnabled = false
             return
         }
         
@@ -134,13 +157,22 @@ class QRCodeReadController: UIViewController, AVCaptureMetadataOutputObjectsDele
             
             qrCodeFrameView?.frame = qrCodeObject.bounds
             
+            // 判斷有無登入
+            if self.userValidate(userAuth: myUserAuth) == false {
+                QRCodeMessageLabel.text = "請點我登入來取得優惠！"
+                QRCodeMessageLabel.isUserInteractionEnabled = true
+                return
+            } else {
+                QRCodeMessageLabel.isUserInteractionEnabled = false
+            }
+            
             if qrCodeObject.stringValue != nil {
                 QRCodeMessageLabel.text = qrCodeObject.stringValue
                 
                 /* 呼叫API */
                 //let qrCodeUrl = ""
                 //let paras: Parameters = ["email": "", "name": ""]
-                //let qrCodeRequest = request(qrCodeUrl, method: .post, parameters: paras, encoding: URLEncoding.default)
+                //let qrCodeRequest = request(qrCodeUrl, method: .post, parameters: paras, encoding: URLEncoding.default, headers: nil)
                 //debugPrint(qrCodeRequest)
                 //qrCodeRequest.responseJSON(completionHandler: { (response: DataResponse<Any>) in
                 //    switch response.result {
@@ -167,18 +199,12 @@ class QRCodeReadController: UIViewController, AVCaptureMetadataOutputObjectsDele
     }
 
     // MARK:- User Defined Method
-    func showAlertWithMessage(alertMessage: String){
-        let alert = UIAlertController(title: "Lunttery", message: "", preferredStyle: UIAlertControllerStyle.alert)
-        
-        // 自定義message font size etc.
-        let textFont = UIFont(name: ".PingFangTC-Regular", size: 15)
-        let attributedStr = NSAttributedString(string: alertMessage, attributes: [NSFontAttributeName: textFont!])
-        
-        alert.setValue(attributedStr, forKey: "attributedMessage")
-        
-        alert.addAction(UIAlertAction(title: "關閉", style: UIAlertActionStyle.default, handler: nil))
-        
-        self.present(alert, animated: true, completion: nil)
+    func goToLogin(gesture: UITapGestureRecognizer) {
+        // 顯示登入畫面
+        let loginController = self.storyboard?.instantiateViewController(withIdentifier: "LoginController") as! LoginController
+        self.present(loginController, animated: true, completion: {
+            //print("===userAuth:\(self.myUserAuth)")
+        })
     }
     
     /*

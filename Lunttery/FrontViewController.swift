@@ -58,16 +58,15 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
                                  "price": (myUserSetting?.price)!,
                                  "style_ids": myStyleArray.joined(separator: ",")
                                 ]
-        let queryRequest = request(queryUrl, method: .get, parameters: paras, encoding: URLEncoding.default)
+        let queryRequest = request(queryUrl, method: .get, parameters: paras, encoding: URLEncoding.default, headers: nil)
         //debugPrint(qrCodeRequest)
         queryRequest.responseJSON(completionHandler: { (response: DataResponse<Any>) in
             switch response.result {
             case .success(let value):
                 
                 self.returnJSON = JSON(value)
-                //print(response.response)
                 
-                UIView.animate(withDuration: 0.8, animations: {
+                UIView.animate(withDuration: 0.7, animations: {
                     //if self.isFirstQuery == true {
                         self.queryButton.isHidden = true
                         self.luntteryLabel.isHidden = true
@@ -80,8 +79,8 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
                         //self.myDefaults.set(false, forKey: "isFirstQuery")
                     //}
                 }, completion: { (animated: Bool) in
-                    // 延遲0.8秒
-                    let _ = Timer.scheduledTimer(timeInterval: 0.8, target: self, selector: #selector(self.myPerform(timer:)), userInfo: nil, repeats: false)
+                    // 延遲0.7秒
+                    let _ = Timer.scheduledTimer(timeInterval: 0.7, target: self, selector: #selector(self.myPerform(timer:)), userInfo: nil, repeats: false)
                 })
             case .failure(let error):
                 //self.showAlertWithMessage(alertMessage: "傳送失敗，請再試一次～")
@@ -127,8 +126,8 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
         // e.g.controller A -> controller B
         // 要修改backBarButtonItem title文字（預設是前一畫面的標題):所以從 controller A 設定
         // 要隱藏backBarButtonItem：self.navigationItem.hideBackButton = true , 從 controller B 設定
-        //let myBackBarButton =  UIBarButtonItem(title: "", style: UIBarButtonItemStyle.plain, target: self, action: Selector(("resetViewDisplay:")))
-        //self.navigationItem.backBarButtonItem = myBackBarButton
+        let myBackBarButton =  UIBarButtonItem(title: "", style: UIBarButtonItemStyle.plain, target: self, action: Selector(("resetViewDisplay:")))
+        self.navigationItem.backBarButtonItem = myBackBarButton
         //self.navigationItem.backBarButtonItem?.setTitleTextAttributes([:], for: .normal)
         
         // 修改 backBarButtonItem color
@@ -153,7 +152,7 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
             locationManager.requestWhenInUseAuthorization()
         } else if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.denied {
             // 用戶不同意
-            showAlertWithMessage(alertMessage: "已拒絕啟用定位服務。請從設置程序中重新啟用。")
+            self.showAlertWithMessage(alertMessage: "已拒絕啟用定位服務。請從設置程序中重新啟用。")
         } else if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse {
             // 用戶已經同意
             locationManager.startUpdatingLocation()
@@ -173,20 +172,6 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     //MARK:- User Defined Method
-    func showAlertWithMessage(alertMessage: String){
-        let alert = UIAlertController(title: "Lunttery", message: "", preferredStyle: UIAlertControllerStyle.alert)
-        
-        // 自定義message font size etc.
-        let textFont = UIFont(name: ".PingFangTC-Regular", size: 15)
-        let attributedStr = NSAttributedString(string: alertMessage, attributes: [NSFontAttributeName: textFont!])
-        
-        alert.setValue(attributedStr, forKey: "attributedMessage")
-        
-        alert.addAction(UIAlertAction(title: "關閉", style: UIAlertActionStyle.default, handler: nil))
-        
-        self.present(alert, animated: true, completion: nil)
-    }
-    
     func myPerform(timer: Timer) {
         self.performSegue(withIdentifier: "front_to_meal", sender: nil)
     }
@@ -209,7 +194,6 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
         if segue.identifier == "front_to_meal" {
             let controller = segue.destination as! MealController
             controller.queryResult = returnJSON
-            //print("===\(controller)")
         }
     }
 }

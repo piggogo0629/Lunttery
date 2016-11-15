@@ -45,6 +45,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let isFirstQuery: Bool = true
             myDefaults.set(isFirstQuery, forKey: "isFirstQuery")
         }
+        // 記錄使用者登入Server取得的token
+        if myDefaults.object(forKey: "user_Auth") == nil {
+            let user_Auth = ["user_id": 0, "auth_token":""] as [String : Any]
+            myDefaults.set(user_Auth, forKey: "user_Auth")
+        }
         
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
