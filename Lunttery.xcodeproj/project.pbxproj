@@ -23,6 +23,10 @@
 		CBD5ACCC1DD6D09900A70790 /* StyleEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5ACCB1DD6D09900A70790 /* StyleEnum.swift */; };
 		CBD5ACCE1DD74CFD00A70790 /* UserSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5ACCD1DD74CFD00A70790 /* UserSetting.swift */; };
 		CBF38B8E1DDB6D9A00CA2E0C /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF38B8D1DDB6D9A00CA2E0C /* ViewControllerExtension.swift */; };
+		CBF38B901DDC2DB600CA2E0C /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF38B8F1DDC2DB600CA2E0C /* MenuController.swift */; };
+		CBF38B921DDC5C6400CA2E0C /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF38B911DDC5C6400CA2E0C /* MapController.swift */; };
+		CBF38B941DDC62BF00CA2E0C /* UserFavoriteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF38B931DDC62BF00CA2E0C /* UserFavoriteController.swift */; };
+		CBF38B961DDC669000CA2E0C /* UserRecordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF38B951DDC669000CA2E0C /* UserRecordController.swift */; };
 		CBF9CD321DD3878300758732 /* InitialSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF9CD311DD3878300758732 /* InitialSettingController.swift */; };
 		CBF9CD6F1DD4994400758732 /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF9CD6E1DD4994400758732 /* SettingController.swift */; };
 /* End PBXBuildFile section */
@@ -49,6 +53,10 @@
 		CBD5ACCB1DD6D09900A70790 /* StyleEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleEnum.swift; sourceTree = "<group>"; };
 		CBD5ACCD1DD74CFD00A70790 /* UserSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSetting.swift; sourceTree = "<group>"; };
 		CBF38B8D1DDB6D9A00CA2E0C /* ViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
+		CBF38B8F1DDC2DB600CA2E0C /* MenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
+		CBF38B911DDC5C6400CA2E0C /* MapController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
+		CBF38B931DDC62BF00CA2E0C /* UserFavoriteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFavoriteController.swift; sourceTree = "<group>"; };
+		CBF38B951DDC669000CA2E0C /* UserRecordController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRecordController.swift; sourceTree = "<group>"; };
 		CBF9CD311DD3878300758732 /* InitialSettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialSettingController.swift; sourceTree = "<group>"; };
 		CBF9CD6E1DD4994400758732 /* SettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
 		E46A7E2B2B95C92575432C1E /* Pods-Lunttery.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lunttery.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lunttery/Pods-Lunttery.release.xcconfig"; sourceTree = "<group>"; };
@@ -135,8 +143,12 @@
 				CB254FB21DCDEC5A001B2881 /* QRCodeReadController.swift */,
 				CB33D1231DD0B064003F495C /* FeedbackController.swift */,
 				CBF9CD6E1DD4994400758732 /* SettingController.swift */,
-				CBD0E8361DD997CE00A8D8DA /* MealController.swift */,
 				CBD0E8381DD99F9B00A8D8DA /* LoginController.swift */,
+				CBD0E8361DD997CE00A8D8DA /* MealController.swift */,
+				CBF38B8F1DDC2DB600CA2E0C /* MenuController.swift */,
+				CBF38B911DDC5C6400CA2E0C /* MapController.swift */,
+				CBF38B931DDC62BF00CA2E0C /* UserFavoriteController.swift */,
+				CBF38B951DDC669000CA2E0C /* UserRecordController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -277,6 +289,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBF38B921DDC5C6400CA2E0C /* MapController.swift in Sources */,
 				CBD5ACCC1DD6D09900A70790 /* StyleEnum.swift in Sources */,
 				CBF9CD6F1DD4994400758732 /* SettingController.swift in Sources */,
 				CBD0E8371DD997CE00A8D8DA /* MealController.swift in Sources */,
@@ -284,9 +297,12 @@
 				CB254FB11DCDC250001B2881 /* FrontViewController.swift in Sources */,
 				CB8ED0051DD1ADE900B71357 /* StringExtension.swift in Sources */,
 				CB33D1241DD0B064003F495C /* FeedbackController.swift in Sources */,
+				CBF38B941DDC62BF00CA2E0C /* UserFavoriteController.swift in Sources */,
 				CBD5ACCE1DD74CFD00A70790 /* UserSetting.swift in Sources */,
 				CBD0E8391DD99F9B00A8D8DA /* LoginController.swift in Sources */,
+				CBF38B961DDC669000CA2E0C /* UserRecordController.swift in Sources */,
 				CB254FB31DCDEC5A001B2881 /* QRCodeReadController.swift in Sources */,
+				CBF38B901DDC2DB600CA2E0C /* MenuController.swift in Sources */,
 				CBF9CD321DD3878300758732 /* InitialSettingController.swift in Sources */,
 				CB254FAE1DCDA3C6001B2881 /* SlideMenuController.swift in Sources */,
 				CBF38B8E1DDB6D9A00CA2E0C /* ViewControllerExtension.swift in Sources */,

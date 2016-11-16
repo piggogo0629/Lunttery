@@ -35,32 +35,33 @@ class MealController: UIViewController {
     @IBOutlet weak var menuBookButton: UIButton!
     
     //MARK:- @IBAction
+    @IBAction func playDice(_ sender: UIButton) {
+        viewDisplay(data: resultArray[1])
+    }
+    
     @IBAction func addToMyFavorite(_ sender: UIButton) {
         if self.userValidate(userAuth: myUserAuth) == true {
             let myUserId = myUserAuth["user_id"] as! Int
             let myMealId = currentJSONData.dictionaryValue["id"]?.intValue
             
-            let updateLikeUrl = ""
-            let paras: Parameters = ["user_id": myUserId, "id": myMealId!]
-            
-            let updateLikeRequest = request(updateLikeUrl, method: .post, parameters: paras, encoding: URLEncoding.default, headers: nil)
+            // http://103.3.61.129/api/meals/MEAL_ID/user_meal_likeships/USER_ID/edit
+            let updateLikeUrl = "http://103.3.61.129/api/meals/\(myMealId!)/user_meal_likeships/\(myUserId)/edit"
+            //let paras: Parameters = ["user_id": myUserId, "id": myMealId!]
+
+            let updateLikeRequest = request(updateLikeUrl, method: .get, headers: nil)
             updateLikeRequest.responseJSON(completionHandler: { (response: DataResponse<Any>) in
                 switch response.result {
                 case .success(let value):
-                    let userData = JSON(value)
-                    
-//                    if userData["message"] == "Ok" {
-//                        // 更新使用者登入資訊
-//                        var user_Auth = self.myDefaults.object(forKey: "user_Auth") as! [String: Any]
-//                        user_Auth["user_id"] = userData["user_id"].intValue
-//                        user_Auth["auth_token"] = userData["auth_token"].stringValue
-//                        
-//                        self.myDefaults.set(user_Auth, forKey: "user_Auth")
-//                        // 回到主畫面
-//                        self.dismiss(animated: true, completion: nil)
-//                    } else {
-//                        self.showAlertWithMessage(alertMessage: "新增最愛失敗，請再試一次～")
-//                    }
+                    let userLikeData = JSON(value)
+                    print("\(userLikeData)")
+                    if userLikeData["data"] == "User like meal" {
+                        // 更新畫面顯示
+                        self.likeButton.imageView?.image = UIImage(named: "like")
+                        self.likeCountLabel.text = String(userLikeData["liked_counts"].intValue)
+                    } else {
+                        self.likeButton.imageView?.image = UIImage(named: "dislike")
+                        self.likeCountLabel.text = String(userLikeData["liked_counts"].intValue)
+                    }
                 case .failure(let error):
                     self.showAlertWithMessage(alertMessage: "新增最愛失敗，請再試一次～")
                     print("=====\(error.localizedDescription)=====")
@@ -73,6 +74,15 @@ class MealController: UIViewController {
                 print("===userAuth:\(self.myUserAuth)")
             })
         }
+    }
+    
+    @IBAction func goToMenu(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "meal_to_menu", sender: nil)
+    }
+    
+    @IBAction func showMap(_ sender: UIButton) {
+        let mapController = self.storyboard?.instantiateViewController(withIdentifier: "MapController") as! MapController
+        self.present(mapController, animated: true, completion: nil)
     }
     
     //MARK:- Self func
@@ -156,7 +166,7 @@ class MealController: UIViewController {
             mealNameLabel.text = mealName
         }
         if let price = data.dictionaryValue["price"]?.int {
-            priceLabel.text = String(price)
+            priceLabel.text = "\(String(price))元"
         }
         if let kcal = data.dictionaryValue["carories"]?.int {
             kcalLabel.text = "\(String(kcal)) kcal"
@@ -182,9 +192,9 @@ class MealController: UIViewController {
         if self.userValidate(userAuth: myUserAuth) == true {
             if let isLike = data["liked"].bool {
                 if isLike == true {
-                    likeButton.imageView?.image = UIImage(named: "dislike")
-                } else {
                     likeButton.imageView?.image = UIImage(named: "like")
+                } else {
+                    likeButton.imageView?.image = UIImage(named: "dislike")
                 }
             }
         } else {
@@ -192,14 +202,15 @@ class MealController: UIViewController {
         }
     }
     
-    /*
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "meal_to_menu" {
+            let menuController = segue.destination as! MenuController
+            menuController.test = 1
+        }
     }
-    */
-
 }

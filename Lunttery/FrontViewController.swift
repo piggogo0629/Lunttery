@@ -37,8 +37,9 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
          //if myLocation == nil {
             // default -> 松江南京站 lat:25.0512257,lng:121.5305447
             myAppDelegate.myLocation = CLLocation(latitude: 25.0512257, longitude: 121.5305447)
-            // demo -> 四平陽光商圈 lat:25.0529708,lng:121.5315674
+            // demo1 -> 四平陽光商圈 lat:25.0529708,lng:121.5315674
             myAppDelegate.myLocation = CLLocation(latitude: 25.0529708, longitude: 121.5315674)
+        
         //}
 
         let myCoordinate = (myAppDelegate.myLocation?.coordinate)!
@@ -59,12 +60,15 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
                                  "style_ids": myStyleArray.joined(separator: ",")
                                 ]
         let queryRequest = request(queryUrl, method: .get, parameters: paras, encoding: URLEncoding.default, headers: nil)
+        
         //debugPrint(qrCodeRequest)
         queryRequest.responseJSON(completionHandler: { (response: DataResponse<Any>) in
             switch response.result {
             case .success(let value):
                 
                 self.returnJSON = JSON(value)
+                
+                //print("returnJSON:\(self.returnJSON)")
                 
                 UIView.animate(withDuration: 0.7, animations: {
                     //if self.isFirstQuery == true {
@@ -83,7 +87,7 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
                     let _ = Timer.scheduledTimer(timeInterval: 0.7, target: self, selector: #selector(self.myPerform(timer:)), userInfo: nil, repeats: false)
                 })
             case .failure(let error):
-                //self.showAlertWithMessage(alertMessage: "傳送失敗，請再試一次～")
+                self.showAlertWithMessage(alertMessage: "查詢失敗，請再試一次～")
                 print("=====\(error.localizedDescription)=====")
             }
         })
@@ -105,6 +109,7 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
             
             //self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
             
+            // 第一次使用App,導引至偏好設定畫面
             let isFirstLaunch = myDefaults.bool(forKey: "isFirstLaunch")
             if isFirstLaunch == true {
                 self.performSegue(withIdentifier: "front_to_set", sender: nil)
@@ -126,8 +131,8 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
         // e.g.controller A -> controller B
         // 要修改backBarButtonItem title文字（預設是前一畫面的標題):所以從 controller A 設定
         // 要隱藏backBarButtonItem：self.navigationItem.hideBackButton = true , 從 controller B 設定
-        let myBackBarButton =  UIBarButtonItem(title: "", style: UIBarButtonItemStyle.plain, target: self, action: Selector(("resetViewDisplay:")))
-        self.navigationItem.backBarButtonItem = myBackBarButton
+        //let myBackBarButton =  UIBarButtonItem(title: "", style: UIBarButtonItemStyle.plain, target: self, action: Selector(("resetViewDisplay:")))
+        //self.navigationItem.backBarButtonItem = myBackBarButton
         //self.navigationItem.backBarButtonItem?.setTitleTextAttributes([:], for: .normal)
         
         // 修改 backBarButtonItem color

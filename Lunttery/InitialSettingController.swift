@@ -36,12 +36,12 @@ class InitialSettingController: UIViewController, UIPickerViewDataSource, UIPick
     @IBOutlet weak var koreaButton: UIButton!
     
     //MARK:- @IBAction
-    @IBAction func close(_ sender: UIButton) {
+//    @IBAction func close(_ sender: UIButton) {
 //        if self.revealViewController() != nil {
 //            self.revealViewController().performSegue(withIdentifier: "sw_front", sender: nil)
 //        }
-        self.dismiss(animated: true, completion: nil)
-    }
+//        self.dismiss(animated: true, completion: nil)
+//    }
     
     @IBAction func selectStyle(_ sender: UIButton) {
         // 至少要選一個
@@ -91,10 +91,7 @@ class InitialSettingController: UIViewController, UIPickerViewDataSource, UIPick
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        // 將第一次進入App改成false
-        let isFirstLaunch: Bool = false
-        self.myDefaults.set(isFirstLaunch, forKey: "isFirstLaunch")
-
+        
         // 修改導覽列文字的顏色，字型
         let textForegroundColor = UIColor(red: 255.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0)
         //let textFont = UIFont.systemFont(ofSize: 30, weight: UIFontWeightSemibold)
@@ -129,22 +126,6 @@ class InitialSettingController: UIViewController, UIPickerViewDataSource, UIPick
                 }
             }
         }
-        /*
-        else {
-            if let savedUserSettingData = myDefaults.object(forKey: "UserSetting") as? Data {
-                myUserSetting = NSKeyedUnarchiver.unarchiveObject(with:savedUserSettingData) as? UserSetting
-                
-                //noticeTimePicker.setDate((myUserSetting?.noticeTime)!, animated: true)
-                styleSelected = (myUserSetting?.styleSelected)!
-                
-                let pricePickerIndex = priceNumArray.index(of: (myUserSetting?.price)!)
-                let distancePickerIndex = distanceNumArray.index(of: (myUserSetting?.restrictedKm)!)
-                
-                pricePicker.selectRow(pricePickerIndex!, inComponent: 0, animated: true)
-                distancePicker.selectRow(distancePickerIndex!, inComponent: 0, animated: true)
-            }
-        }
-        */
         
         // init button dislay
         changeButtonDisplay(isSelected: styleSelected[taiwanButton.tag]!, button: taiwanButton)
@@ -173,21 +154,13 @@ class InitialSettingController: UIViewController, UIPickerViewDataSource, UIPick
         if myDefaults.object(forKey: "UserSetting") == nil {
             myUserSetting = UserSetting(noticeTime: defaultNoticeTime!, price: price, styleSelected: styleSelected, restrictedKm: distance)
         }
-        /*
-        else {
-            if let savedUserSettingData = myDefaults.object(forKey: "UserSetting") as? Data {
-                myUserSetting = NSKeyedUnarchiver.unarchiveObject(with: savedUserSettingData) as? UserSetting
-                
-                myUserSetting?.noticeTime = defaultNoticeTime!
-                myUserSetting?.price = price
-                myUserSetting?.styleSelected = styleSelected
-                myUserSetting?.restrictedKm = distance
-            }
-        }
-        */
-        let archivedUserSetting = NSKeyedArchiver.archivedData(withRootObject: myUserSetting!)
         
+        let archivedUserSetting = NSKeyedArchiver.archivedData(withRootObject: myUserSetting!)
         myDefaults.setValue(archivedUserSetting, forKey: "UserSetting")
+        
+        // 將第一次進入App改成false
+        let isFirstLaunch: Bool = false
+        self.myDefaults.set(isFirstLaunch, forKey: "isFirstLaunch")
     }
 
     
