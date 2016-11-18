@@ -22,11 +22,15 @@
 		CBD0E8391DD99F9B00A8D8DA /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD0E8381DD99F9B00A8D8DA /* LoginController.swift */; };
 		CBD5ACCC1DD6D09900A70790 /* StyleEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5ACCB1DD6D09900A70790 /* StyleEnum.swift */; };
 		CBD5ACCE1DD74CFD00A70790 /* UserSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5ACCD1DD74CFD00A70790 /* UserSetting.swift */; };
+		CBDEFF681DDF09050073FD2A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBDEFF671DDF09050073FD2A /* MapKit.framework */; };
 		CBF38B8E1DDB6D9A00CA2E0C /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF38B8D1DDB6D9A00CA2E0C /* ViewControllerExtension.swift */; };
 		CBF38B901DDC2DB600CA2E0C /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF38B8F1DDC2DB600CA2E0C /* MenuController.swift */; };
 		CBF38B921DDC5C6400CA2E0C /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF38B911DDC5C6400CA2E0C /* MapController.swift */; };
 		CBF38B941DDC62BF00CA2E0C /* UserFavoriteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF38B931DDC62BF00CA2E0C /* UserFavoriteController.swift */; };
 		CBF38B961DDC669000CA2E0C /* UserRecordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF38B951DDC669000CA2E0C /* UserRecordController.swift */; };
+		CBF38B981DDD8E7800CA2E0C /* MenuViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF38B971DDD8E7800CA2E0C /* MenuViewCell.swift */; };
+		CBF38B9A1DDED90800CA2E0C /* TableSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF38B991DDED90800CA2E0C /* TableSectionHeader.swift */; };
+		CBF38B9D1DDED9F100CA2E0C /* TableSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = CBF38B9C1DDED9F100CA2E0C /* TableSectionHeader.xib */; };
 		CBF9CD321DD3878300758732 /* InitialSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF9CD311DD3878300758732 /* InitialSettingController.swift */; };
 		CBF9CD6F1DD4994400758732 /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF9CD6E1DD4994400758732 /* SettingController.swift */; };
 /* End PBXBuildFile section */
@@ -52,11 +56,15 @@
 		CBD0E8381DD99F9B00A8D8DA /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		CBD5ACCB1DD6D09900A70790 /* StyleEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleEnum.swift; sourceTree = "<group>"; };
 		CBD5ACCD1DD74CFD00A70790 /* UserSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSetting.swift; sourceTree = "<group>"; };
+		CBDEFF671DDF09050073FD2A /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		CBF38B8D1DDB6D9A00CA2E0C /* ViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 		CBF38B8F1DDC2DB600CA2E0C /* MenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		CBF38B911DDC5C6400CA2E0C /* MapController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
 		CBF38B931DDC62BF00CA2E0C /* UserFavoriteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFavoriteController.swift; sourceTree = "<group>"; };
 		CBF38B951DDC669000CA2E0C /* UserRecordController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRecordController.swift; sourceTree = "<group>"; };
+		CBF38B971DDD8E7800CA2E0C /* MenuViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewCell.swift; sourceTree = "<group>"; };
+		CBF38B991DDED90800CA2E0C /* TableSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionHeader.swift; sourceTree = "<group>"; };
+		CBF38B9C1DDED9F100CA2E0C /* TableSectionHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableSectionHeader.xib; sourceTree = "<group>"; };
 		CBF9CD311DD3878300758732 /* InitialSettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialSettingController.swift; sourceTree = "<group>"; };
 		CBF9CD6E1DD4994400758732 /* SettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
 		E46A7E2B2B95C92575432C1E /* Pods-Lunttery.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lunttery.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lunttery/Pods-Lunttery.release.xcconfig"; sourceTree = "<group>"; };
@@ -67,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBDEFF681DDF09050073FD2A /* MapKit.framework in Frameworks */,
 				423E4F0704A30AF14EED4407 /* Pods_Lunttery.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -86,6 +95,7 @@
 		7CEC511DF65B55CAE43C7062 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CBDEFF671DDF09050073FD2A /* MapKit.framework */,
 				0D37BD64E391A73009349756 /* Pods_Lunttery.framework */,
 			);
 			name = Frameworks;
@@ -112,6 +122,7 @@
 		CB254F951DCD9A3C001B2881 /* Lunttery */ = {
 			isa = PBXGroup;
 			children = (
+				CBF38B9B1DDED9D400CA2E0C /* Nibs */,
 				CB254FAC1DCD9DC8001B2881 /* SWRevealViewController */,
 				CBF9CD0E1DD2495800758732 /* SwiftFiles */,
 				CB254FAF1DCDC1D1001B2881 /* ViewControllers */,
@@ -146,11 +157,20 @@
 				CBD0E8381DD99F9B00A8D8DA /* LoginController.swift */,
 				CBD0E8361DD997CE00A8D8DA /* MealController.swift */,
 				CBF38B8F1DDC2DB600CA2E0C /* MenuController.swift */,
+				CBF38B971DDD8E7800CA2E0C /* MenuViewCell.swift */,
 				CBF38B911DDC5C6400CA2E0C /* MapController.swift */,
 				CBF38B931DDC62BF00CA2E0C /* UserFavoriteController.swift */,
 				CBF38B951DDC669000CA2E0C /* UserRecordController.swift */,
 			);
 			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		CBF38B9B1DDED9D400CA2E0C /* Nibs */ = {
+			isa = PBXGroup;
+			children = (
+				CBF38B9C1DDED9F100CA2E0C /* TableSectionHeader.xib */,
+			);
+			name = Nibs;
 			sourceTree = "<group>";
 		};
 		CBF9CD0E1DD2495800758732 /* SwiftFiles */ = {
@@ -160,6 +180,7 @@
 				CBD5ACCB1DD6D09900A70790 /* StyleEnum.swift */,
 				CBD5ACCD1DD74CFD00A70790 /* UserSetting.swift */,
 				CBF38B8D1DDB6D9A00CA2E0C /* ViewControllerExtension.swift */,
+				CBF38B991DDED90800CA2E0C /* TableSectionHeader.swift */,
 			);
 			name = SwiftFiles;
 			sourceTree = "<group>";
@@ -202,6 +223,11 @@
 						DevelopmentTeam = 8H7X36TF25;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -228,6 +254,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBF38B9D1DDED9F100CA2E0C /* TableSectionHeader.xib in Resources */,
 				CB254FA11DCD9A3C001B2881 /* LaunchScreen.storyboard in Resources */,
 				CB254F9E1DCD9A3C001B2881 /* Assets.xcassets in Resources */,
 				CB254F9C1DCD9A3C001B2881 /* Main.storyboard in Resources */,
@@ -294,6 +321,7 @@
 				CBF9CD6F1DD4994400758732 /* SettingController.swift in Sources */,
 				CBD0E8371DD997CE00A8D8DA /* MealController.swift in Sources */,
 				CB254F971DCD9A3C001B2881 /* AppDelegate.swift in Sources */,
+				CBF38B981DDD8E7800CA2E0C /* MenuViewCell.swift in Sources */,
 				CB254FB11DCDC250001B2881 /* FrontViewController.swift in Sources */,
 				CB8ED0051DD1ADE900B71357 /* StringExtension.swift in Sources */,
 				CB33D1241DD0B064003F495C /* FeedbackController.swift in Sources */,
@@ -301,6 +329,7 @@
 				CBD5ACCE1DD74CFD00A70790 /* UserSetting.swift in Sources */,
 				CBD0E8391DD99F9B00A8D8DA /* LoginController.swift in Sources */,
 				CBF38B961DDC669000CA2E0C /* UserRecordController.swift in Sources */,
+				CBF38B9A1DDED90800CA2E0C /* TableSectionHeader.swift in Sources */,
 				CB254FB31DCDEC5A001B2881 /* QRCodeReadController.swift in Sources */,
 				CBF38B901DDC2DB600CA2E0C /* MenuController.swift in Sources */,
 				CBF9CD321DD3878300758732 /* InitialSettingController.swift in Sources */,

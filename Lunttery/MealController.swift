@@ -14,9 +14,10 @@ import SDWebImage
 class MealController: UIViewController {
     
     //MARK:- Variables
-    var queryResult: JSON?
-    var resultArray: [JSON]!
-    var currentJSONData: JSON!
+    var queryResult: JSON?      //查詢結果
+    var mealDataArray: [JSON]!  //查詢結果的餐點資料陣列
+    var currentMealData: JSON!  //當前畫面顯示的餐點資料
+    var menuDataArray: [JSON]!
     let myDefaults = UserDefaults.standard
     var myUserAuth: [String: Any]!
     
@@ -36,30 +37,28 @@ class MealController: UIViewController {
     
     //MARK:- @IBAction
     @IBAction func playDice(_ sender: UIButton) {
-        viewDisplay(data: resultArray[1])
+        viewDisplay(data: mealDataArray[1])
     }
     
     @IBAction func addToMyFavorite(_ sender: UIButton) {
         if self.userValidate(userAuth: myUserAuth) == true {
             let myUserId = myUserAuth["user_id"] as! Int
-            let myMealId = currentJSONData.dictionaryValue["id"]?.intValue
+            let myMealId = currentMealData.dictionaryValue["id"]?.intValue
             
             // http://103.3.61.129/api/meals/MEAL_ID/user_meal_likeships/USER_ID/edit
             let updateLikeUrl = "http://103.3.61.129/api/meals/\(myMealId!)/user_meal_likeships/\(myUserId)/edit"
-            //let paras: Parameters = ["user_id": myUserId, "id": myMealId!]
-
             let updateLikeRequest = request(updateLikeUrl, method: .get, headers: nil)
             updateLikeRequest.responseJSON(completionHandler: { (response: DataResponse<Any>) in
                 switch response.result {
                 case .success(let value):
                     let userLikeData = JSON(value)
-                    print("\(userLikeData)")
+                    //print("\(userLikeData)")
                     if userLikeData["data"] == "User like meal" {
                         // 更新畫面顯示
-                        self.likeButton.imageView?.image = UIImage(named: "like")
+                        self.likeButton.setImage(UIImage(named: "like"), for: UIControlState.normal)
                         self.likeCountLabel.text = String(userLikeData["liked_counts"].intValue)
                     } else {
-                        self.likeButton.imageView?.image = UIImage(named: "dislike")
+                         self.likeButton.setImage(UIImage(named: "dislike"), for: UIControlState.normal)
                         self.likeCountLabel.text = String(userLikeData["liked_counts"].intValue)
                     }
                 case .failure(let error):
@@ -77,11 +76,39 @@ class MealController: UIViewController {
     }
     
     @IBAction func goToMenu(_ sender: UIButton) {
-        self.performSegue(withIdentifier: "meal_to_menu", sender: nil)
+        /* 呼叫API讀取餐廳菜單資料 */
+        // http://103.3.61.129/api/dinners?id=29&auth_token=
+        
+        let dinnerId = currentMealData["dinner"].dictionaryValue["id"]?.intValue
+        let authToken = myUserAuth["auth_token"] as! String
+        
+        print("dinner_auth:\(authToken)")
+        
+        let menulUrl = "http://103.3.61.129/api/dinners"
+        let paras: Parameters = ["id": dinnerId!, "auth_token": authToken]
+        let menuRequert = request(menulUrl, method: .get, parameters: paras, encoding: URLEncoding.default, headers: nil)
+        
+        print("request:\(menuRequert)")
+        
+        menuRequert.responseJSON { (response: DataResponse<Any>) in
+            switch response.result {
+            case .success(let value):
+                let menuData = JSON(value)
+                self.menuDataArray = menuData["data"].arrayValue
+                
+                self.performSegue(withIdentifier: "meal_to_menu", sender: nil)
+            case .failure(let error):
+                self.showAlertWithMessage(alertMessage: "讀取資料失敗，請再試一次～")
+                print("=====\(error.localizedDescription)=====")
+                return
+            }
+        }
     }
     
     @IBAction func showMap(_ sender: UIButton) {
         let mapController = self.storyboard?.instantiateViewController(withIdentifier: "MapController") as! MapController
+        mapController.dinnerData = currentMealData["dinner"]
+        
         self.present(mapController, animated: true, completion: nil)
     }
     
@@ -113,17 +140,17 @@ class MealController: UIViewController {
         if myDefaults.object(forKey: "user_Auth") != nil {
             myUserAuth = myDefaults.object(forKey: "user_Auth") as! [String : Any]
         }
-
+        
         // 資料處理
         if let data = queryResult?["data"].array {
-            resultArray = data
+            mealDataArray = data
         }
         // 當前畫面的資料
-        currentJSONData = resultArray[0]
+        currentMealData = mealDataArray[0]
         // 畫面載入時顯示第一筆
-        viewDisplay(data: resultArray[0])
+        viewDisplay(data: mealDataArray[0])
         
-        print("\(currentJSONData)")
+        print("\(currentMealData)")
     }
 
     override func didReceiveMemoryWarning() {
@@ -188,17 +215,17 @@ class MealController: UIViewController {
             
             distanceLabel.text = "路程約 \(approximatelyDist) min"
         }
-        // 我的最愛按鈕顯示
+        // 我的最愛按鈕顯示 & 數字
         if self.userValidate(userAuth: myUserAuth) == true {
             if let isLike = data["liked"].bool {
                 if isLike == true {
-                    likeButton.imageView?.image = UIImage(named: "like")
+                    likeButton.setImage(UIImage(named: "like"), for: UIControlState.normal)
                 } else {
-                    likeButton.imageView?.image = UIImage(named: "dislike")
+                    likeButton.setImage(UIImage(named: "dislike"), for: UIControlState.normal)
                 }
             }
         } else {
-            likeButton.imageView?.image = UIImage(named: "dislike")
+            likeButton.setImage(UIImage(named: "dislike"), for: UIControlState.normal)
         }
     }
     
@@ -210,7 +237,7 @@ class MealController: UIViewController {
         // Pass the selected object to the new view controller.
         if segue.identifier == "meal_to_menu" {
             let menuController = segue.destination as! MenuController
-            menuController.test = 1
+            menuController.menuDataArray = menuDataArray
         }
     }
 }

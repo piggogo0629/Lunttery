@@ -21,6 +21,7 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
     var myUserSetting: UserSetting? = nil
     var isFirstQuery: Bool = false
     var returnJSON: JSON?
+    var myUserAuth: [String: Any]!
     
     //MARK:- @IBOutlet
     @IBOutlet weak var menuButton: UIBarButtonItem!
@@ -36,13 +37,15 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
     @IBAction func oneTouchSearch(_ sender: Any) {
          //if myLocation == nil {
             // default -> 松江南京站 lat:25.0512257,lng:121.5305447
-            myAppDelegate.myLocation = CLLocation(latitude: 25.0512257, longitude: 121.5305447)
+            //myAppDelegate.myLocation = CLLocation(latitude: 25.0512257, longitude: 121.5305447)
             // demo1 -> 四平陽光商圈 lat:25.0529708,lng:121.5315674
             myAppDelegate.myLocation = CLLocation(latitude: 25.0529708, longitude: 121.5315674)
-        
+            // demo2 -> 未來產房 lat:25.054724,lng:121.542903
+            //myAppDelegate.myLocation = CLLocation(latitude: 25.054724, longitude: 121.542903)
         //}
 
         let myCoordinate = (myAppDelegate.myLocation?.coordinate)!
+        
         var myStyleArray = [String]()
         
         for item in (myUserSetting?.styleSelected)! {
@@ -53,12 +56,15 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
         // http://103.3.61.129/api/meals?lat=25.0521723&lng=121.5321898&distant=0.1&style_ids=1,3,4&price=101
         /* 呼叫API */
         let queryUrl = "http://103.3.61.129/api/meals"
+        let authToken = myUserAuth["auth_token"] as! String
+        
         let paras: Parameters = ["lat": myCoordinate.latitude,
                                  "lng": myCoordinate.longitude,
                                  "distant": (myUserSetting?.restrictedKm)!,
                                  "price": (myUserSetting?.price)!,
-                                 "style_ids": myStyleArray.joined(separator: ",")
-                                ]
+                                 "style_ids": myStyleArray.joined(separator: ","),
+                                 "auth_token": authToken]
+        
         let queryRequest = request(queryUrl, method: .get, parameters: paras, encoding: URLEncoding.default, headers: nil)
         
         //debugPrint(qrCodeRequest)
@@ -120,6 +126,11 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
             isFirstQuery = myDefaults.bool(forKey: "isFirstQuery")
         }
         
+        // 讀取使用者登入資訊
+        if myDefaults.object(forKey: "user_Auth") != nil {
+            myUserAuth = myDefaults.object(forKey: "user_Auth") as? [String : Any]
+        }
+        
         // 修改導覽列文字的顏色，字型
         let textForegroundColor = UIColor(red: 255.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0)
         //let textFont = UIFont.systemFont(ofSize: 30, weight: UIFontWeightSemibold)
@@ -131,8 +142,8 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
         // e.g.controller A -> controller B
         // 要修改backBarButtonItem title文字（預設是前一畫面的標題):所以從 controller A 設定
         // 要隱藏backBarButtonItem：self.navigationItem.hideBackButton = true , 從 controller B 設定
-        //let myBackBarButton =  UIBarButtonItem(title: "", style: UIBarButtonItemStyle.plain, target: self, action: Selector(("resetViewDisplay:")))
-        //self.navigationItem.backBarButtonItem = myBackBarButton
+        let myBackBarButton =  UIBarButtonItem(title: "", style: UIBarButtonItemStyle.plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = myBackBarButton
         //self.navigationItem.backBarButtonItem?.setTitleTextAttributes([:], for: .normal)
         
         // 修改 backBarButtonItem color
@@ -140,13 +151,20 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
         
         // 配置locationManager
         locationManager.delegate = self
-        locationManager.distanceFilter  = kCLLocationAccuracyNearestTenMeters
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // 讀取使用者登入資訊
+        if myDefaults.object(forKey: "user_Auth") != nil {
+            myUserAuth = myDefaults.object(forKey: "user_Auth") as? [String : Any]
+        }
     }
     
     // 在 viewDidAppear 方法而不是其它方法中檢查用戶授權狀態，是因為有用戶會去設置程序中修改授權，然後又回到 App。因此我們需要在這時重新對用戶授權狀態進行檢查。
@@ -170,6 +188,7 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
+    //MARK:- CLLocationManagerDelegate protocol
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
             myAppDelegate.myLocation = location

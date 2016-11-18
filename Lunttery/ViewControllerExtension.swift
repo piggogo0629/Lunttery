@@ -10,6 +10,11 @@ import Foundation
 import UIKit
 
 extension UIViewController {
+    func deBugPrint(titleText: String, content: Any) {
+        let stringText = "===== " + titleText + ":\(content)"
+        print(stringText)
+    }
+
     func showAlertWithMessage(alertMessage: String) {
         let alert = UIAlertController(title: "Lunttery", message: "", preferredStyle: UIAlertControllerStyle.alert)
         
@@ -35,4 +40,28 @@ extension UIViewController {
         }
     }
 
+    func showActivityIndicator(with targetView: UIView) -> UIView {
+        let container: UIView = UIView()
+        container.frame = targetView.frame
+        container.center = targetView.center
+        container.backgroundColor = UIColor(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 0.4)
+        
+        let loadingView: UIView = UIView()
+        loadingView.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
+        loadingView.center = targetView.center
+        loadingView.backgroundColor = UIColor(red: 68.0/255.0, green: 68.0/255.0, blue: 68.0/255.0, alpha: 0.8)
+        loadingView.clipsToBounds = true
+        loadingView.layer.cornerRadius = 10
+        
+        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        activityIndicator.center = CGPoint(x: loadingView.frame.size.width / 2, y: loadingView.frame.size.height / 2)
+        
+        loadingView.addSubview(activityIndicator)
+        container.addSubview(loadingView)
+        targetView.addSubview(container)
+        activityIndicator.startAnimating()
+        
+        return container
+    }
 }
