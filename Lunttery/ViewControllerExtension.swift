@@ -10,11 +10,6 @@ import Foundation
 import UIKit
 
 extension UIViewController {
-    func deBugPrint(titleText: String, content: Any) {
-        let stringText = "===== " + titleText + ":\(content)"
-        print(stringText)
-    }
-
     func showAlertWithMessage(alertMessage: String) {
         let alert = UIAlertController(title: "Lunttery", message: "", preferredStyle: UIAlertControllerStyle.alert)
         

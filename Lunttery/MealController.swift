@@ -20,6 +20,7 @@ class MealController: UIViewController {
     var menuDataArray: [JSON]!
     let myDefaults = UserDefaults.standard
     var myUserAuth: [String: Any]!
+    var myTapCount = 1
     
     //MARK:- @IBOutlet
     @IBOutlet weak var menuButton: UIBarButtonItem!
@@ -34,10 +35,21 @@ class MealController: UIViewController {
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var ratingButton: UIButton!
     @IBOutlet weak var menuBookButton: UIButton!
+    @IBOutlet weak var playDiceButton: UIButton!
+    @IBOutlet weak var openQRCodeButton: UIButton!
+    
     
     //MARK:- @IBAction
     @IBAction func playDice(_ sender: UIButton) {
-        viewDisplay(data: mealDataArray[1])
+        if mealDataArray.count == 1 || (mealDataArray.count - myTapCount) == 0 {
+            return
+        }
+        
+        currentMealData = mealDataArray[mealDataArray.count - myTapCount]
+        viewDisplay(data: mealDataArray[mealDataArray.count - myTapCount])
+        
+        myTapCount += 1
+        //sender.setTitle("再一次(\(mealDataArray.count - myTapCount))", for: .normal)
     }
     
     @IBAction func addToMyFavorite(_ sender: UIButton) {
@@ -82,13 +94,13 @@ class MealController: UIViewController {
         let dinnerId = currentMealData["dinner"].dictionaryValue["id"]?.intValue
         let authToken = myUserAuth["auth_token"] as! String
         
-        print("dinner_auth:\(authToken)")
+        //print("dinner_auth:\(authToken)")
         
         let menulUrl = "http://103.3.61.129/api/dinners"
         let paras: Parameters = ["id": dinnerId!, "auth_token": authToken]
         let menuRequert = request(menulUrl, method: .get, parameters: paras, encoding: URLEncoding.default, headers: nil)
         
-        print("request:\(menuRequert)")
+        //print("request:\(menuRequert)")
         
         menuRequert.responseJSON { (response: DataResponse<Any>) in
             switch response.result {
@@ -112,7 +124,17 @@ class MealController: UIViewController {
         self.present(mapController, animated: true, completion: nil)
     }
     
+    @IBAction func openQRCode(_ sender: UIButton) {
+        let qrCodeReaderController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "QRCodeReaderController")
+        
+        self.revealViewController().pushFrontViewController(qrCodeReaderController, animated: true)
+    }
+
     //MARK:- Self func
+    deinit {
+        print("=====MealController deinit=====")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -122,13 +144,25 @@ class MealController: UIViewController {
             menuButton.target = self.revealViewController()
             menuButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
             
-            //self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            // Simply ease out. No Spring animation.
+            self.revealViewController().toggleAnimationType = SWRevealToggleAnimationType.easeOut
+            // slide animation time
+            //self.revealViewController().toggleAnimationDuration = 0.3;
+            
+            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         
         //self.navigationItem.hidesBackButton = true
         let newBackButton = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.plain, target: self, action: #selector(back(sender:)))
-        newBackButton.image = UIImage(named: "reply")
+        //newBackButton.image = UIImage(named: "reply")
         self.navigationItem.leftBarButtonItem = newBackButton
+        
+        // 修改導覽列文字的顏色，字型
+        let textForegroundColor = UIColor(red: 255.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0)
+        //let textFont = UIFont.systemFont(ofSize: 30, weight: UIFontWeightSemibold)
+        let textFont = UIFont(name: ".PingFangTC-Semibold", size: 30)
+        let textArttribute = [NSForegroundColorAttributeName: textForegroundColor, NSFontAttributeName: textFont]
+        self.navigationController?.navigationBar.titleTextAttributes = textArttribute
         
         // 調整EdgeInsets，讓button呈現圖片在上文字在下的效果
         ratingButton.imageEdgeInsets = UIEdgeInsetsMake(-(ratingButton.titleLabel?.intrinsicContentSize.height)!, 0, 0, -(ratingButton.titleLabel?.intrinsicContentSize.width)!)
@@ -144,13 +178,23 @@ class MealController: UIViewController {
         // 資料處理
         if let data = queryResult?["data"].array {
             mealDataArray = data
+            
+            //playDiceButton.setTitle("再一次(\(mealDataArray.count-1))", for: .normal)
         }
+        
+        if let isFind = queryResult?["is_find"].boolValue {
+            if isFind == false {
+                self.showAlertWithMessage(alertMessage: "很抱歉，Lunttery暫無合適資料提供給您！\n將以隨機資料替代")
+            }
+        }
+        
         // 當前畫面的資料
         currentMealData = mealDataArray[0]
         // 畫面載入時顯示第一筆
         viewDisplay(data: mealDataArray[0])
         
-        print("\(currentMealData)")
+        print("\(mealDataArray)")
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -190,7 +234,7 @@ class MealController: UIViewController {
         }
         
         if let mealName = data.dictionaryValue["name"]?.string {
-            mealNameLabel.text = mealName
+            mealNameLabel.text = "\(mealName)"
         }
         if let price = data.dictionaryValue["price"]?.int {
             priceLabel.text = "\(String(price))元"
@@ -203,6 +247,13 @@ class MealController: UIViewController {
         }
         // 餐廳資訊
         let dinner = data.dictionaryValue["dinner"]?.dictionaryValue
+        if let onSale = dinner?["onsale"]?.boolValue {
+            if onSale == true {
+                openQRCodeButton.isHidden = false
+            } else {
+                openQRCodeButton.isHidden = true
+            }
+        }
         if let dinnerName = dinner?["name"]?.string {
             dinnerNameLabel.text = dinnerName
         }

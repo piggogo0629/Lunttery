@@ -19,13 +19,18 @@ class QRCodeReadController: UIViewController, AVCaptureMetadataOutputObjectsDele
     //MARK:- Variables
     let myDefaults = UserDefaults.standard
     var myUserAuth: [String: Any]!
+    var canUse = [String:Any]()
+    var noUse  = [String:Any]()
     var canUseCuponMessage = ""
+    var noUseCuponMessage  = ""
     var canUseCupon: Bool? = nil
     //QRCode Reader需要這3個類別的變數
     var captureSession: AVCaptureSession?
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     var qrCodeFrameView: UIView?
-
+    var overlay: UIView?
+    
+    
     //MARK:- @IBOutlet
     @IBOutlet weak var closeButon: UIButton!
     @IBOutlet weak var menuButton: UIBarButtonItem!
@@ -36,7 +41,12 @@ class QRCodeReadController: UIViewController, AVCaptureMetadataOutputObjectsDele
     //MARK:- @IBAction
     @IBAction func close(_ sender: UIButton) {
         // 回到FrontView
-        self.revealViewController().performSegue(withIdentifier: "sw_front", sender: nil) 
+        
+        self.revealViewController().performSegue(withIdentifier: "sw_front", sender: nil)
+        
+        //let frontViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FrontViewController")
+        
+        //self.revealViewController().pushFrontViewController(frontViewController, animated: true)
     }
     
     //MARK:- self Funcs
@@ -53,7 +63,12 @@ class QRCodeReadController: UIViewController, AVCaptureMetadataOutputObjectsDele
             menuButton.target = self.revealViewController()
             menuButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
             
-            //self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            // Simply ease out. No Spring animation.
+            self.revealViewController().toggleAnimationType = SWRevealToggleAnimationType.easeOut
+            // slide animation time
+            //self.revealViewController().toggleAnimationDuration = 0.3;
+            
+            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         
         //隱藏backBarButtonItem：self.navigationItem.hideBackButton = true
@@ -148,7 +163,7 @@ class QRCodeReadController: UIViewController, AVCaptureMetadataOutputObjectsDele
             QRCodeMessageLabel.isUserInteractionEnabled = false
             return
         }
-        
+
         // 取得元資料（metadata）物件
         let metaDataObj = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
         if metaDataObj.type == AVMetadataObjectTypeQRCode {
@@ -165,78 +180,83 @@ class QRCodeReadController: UIViewController, AVCaptureMetadataOutputObjectsDele
             } else {
                 QRCodeMessageLabel.isUserInteractionEnabled = false
             }
+            // 已經使用過優惠
+            if self.canUseCupon != nil {
+                if self.canUseCupon == false {
+                self.QRCodeMessageLabel.text = noUseCuponMessage
+                return
+                }
+            }
             
             if qrCodeObject.stringValue != nil {
-                
-                //self.getQRCodeResult(qrCodeString: qrCodeObject.stringValue)
                 if qrCodeObject.stringValue.range(of: ",") != nil {
                     // e.g.富霸王豬腳,2
+
                     let stringArray = qrCodeObject.stringValue.components(separatedBy: ",")
                     let dinnerId = Int(stringArray[1])
                     let userId = self.myUserAuth["user_id"] as! Int
                     
                     // http://103.3.61.129/api/dinners/DINNER_ID/coupon_tracks/USER_ID/edit
                     /* 呼叫API */
+                    let qrCodeUrl = "http://103.3.61.129/api/dinners/\(dinnerId!)/coupon_tracks/\(userId)/edit"
+                    let qrCodeRequest = request(qrCodeUrl, method: .get, headers: nil)
                     
-                    guard let _ = canUseCupon else {
-                        let qrCodeUrl = "http://103.3.61.129/api/dinners/\(dinnerId!)/coupon_tracks/\(userId)/edit"
-                        //let paras: Parameters = ["email": "", "name": ""]
-                        let qrCodeRequest = request(qrCodeUrl, method: .get, headers: nil)
-                        qrCodeRequest.responseJSON(completionHandler: { (response: DataResponse<Any>) in
-                            switch response.result {
-                            case .success(let value):
-                                let returnJSON = JSON(value)
+                    qrCodeRequest.responseJSON(completionHandler: { (response: DataResponse<Any>) in
+                        switch response.result {
+                        case .success(let value):
+                            let returnJSON = JSON(value)
+                            
+                            let _canUseCoupon = returnJSON["can_use_cupon"].boolValue // user能否使用Coupon
+                            let onSale = returnJSON["dinner"].dictionaryValue["onsale"]?.boolValue // 店家目前有無提供優惠
+                            let onSaleContent = returnJSON["dinner"].dictionaryValue["onsale_content"]?.stringValue // 優惠內容
+                            let returnMessage = returnJSON["message"].stringValue // server的回應訊息
+                            
+                            print("canUseCoupon:\(self.canUseCupon)")
+                            
+                            if _canUseCoupon == false || onSale == false {
+                                // 已使用過優惠 或 該店家目前無優惠
+                                // set
+                                self.canUseCupon = _canUseCoupon
+                                self.noUseCuponMessage = returnMessage + "~"
+                            } else if _canUseCoupon == true && onSale == true {
+                                // 可使用優惠
+                                // set
+                                self.canUseCupon = _canUseCoupon
+                                self.canUseCuponMessage = onSaleContent! + "~"
                                 
-                                let canUseCoupon = returnJSON["can_use_cupon"].boolValue // user能否使用Coupon
-                                let onSale = returnJSON["dinner"].dictionaryValue["onsale"]?.boolValue // 店家目前有無提供優惠
-                                let onSaleContent = returnJSON["dinner"].dictionaryValue["onsale_content"]?.stringValue // 優惠內容
-                                let returnMessage = returnJSON["message"].stringValue // server的回應訊息
-                                
-                                //print(returnJSON)
-                                
-                                print("canUseCoupon:\(self.canUseCupon)")
-                                
-                                if canUseCoupon == false || onSale == false {
-                                    // 已使用過優惠 或 該店家目前無優惠
-                                    self.canUseCupon = canUseCoupon
-                                    self.canUseCuponMessage = returnMessage + "~"
-                                }
-                                else if canUseCoupon == true && onSale == true {
-                                    // 使用優惠成功
-                                    self.canUseCupon = canUseCoupon
-                                    self.canUseCuponMessage = onSaleContent! + "~"
-                                }
-                            case .failure(let error):
-                                self.showAlertWithMessage(alertMessage: "傳送失敗，請再試一次～")
-                                print("=====\(error.localizedDescription)=====")
-                            }
-                        })
-                        
-                        if self.canUseCupon != nil {
-                            if self.canUseCupon == true {
                                 // 使用優惠成功後將QRCode相關設置清除
                                 self.captureSession?.stopRunning()
+                                self.videoPreviewLayer?.connection.isEnabled = false
                                 self.videoPreviewLayer?.removeFromSuperlayer()
                                 self.qrCodeFrameView?.removeFromSuperview()
+                                
+                                self.videoPreviewLayer = nil;
+                                self.captureSession = nil;
+                                
                                 // 顯示成功資訊
                                 self.QRCodeMessageLabel.text = ""
                                 self.view.bringSubview(toFront: self.successImageView)
                                 self.view.bringSubview(toFront: self.successLabel)
-                                
-                                self.QRCodeMessageLabel.text = self.canUseCuponMessage
-                            } else if self.canUseCupon == false {
-                                // 已使用過優惠顯示提醒訊息
-                                self.QRCodeMessageLabel.text = self.canUseCuponMessage
                             }
+                            
+                            if _canUseCoupon == true || onSale == true {
+                                self.QRCodeMessageLabel.text = self.canUseCuponMessage
+                                return
+                            } else {
+                                self.QRCodeMessageLabel.text = self.noUseCuponMessage
+                                return
+                            }
+                            
+                        case .failure(let error):
+                            self.showAlertWithMessage(alertMessage: "傳送失敗，請再試一次～")
+                            print("=====\(error.localizedDescription)=====")
                         }
-                        
-                        return
-                    }
+                    })
                 }
             }
         }
     }
-
+    
     // MARK:- User Defined Method
     func goToLogin(gesture: UITapGestureRecognizer) {
         // 顯示登入畫面
@@ -244,66 +264,6 @@ class QRCodeReadController: UIViewController, AVCaptureMetadataOutputObjectsDele
         self.present(loginController, animated: true, completion: {
             //print("===userAuth:\(self.myUserAuth)")
         })
-    }
-    
-    func getQRCodeResult(qrCodeString: String) {
-        if qrCodeString.range(of: ",") != nil {
-            // e.g.富霸王豬腳,2
-            let stringArray = qrCodeString.components(separatedBy: ",")
-            let dinnerId = Int(stringArray[1])
-            let userId = myUserAuth["user_id"] as! Int
-            
-            // http://103.3.61.129/api/dinners/DINNER_ID/coupon_tracks/USER_ID/edit
-            /* 呼叫API */
-            let qrCodeUrl = "http://103.3.61.129/api/dinners/\(dinnerId!)/coupon_tracks/\(userId)/edit"
-            //let paras: Parameters = ["email": "", "name": ""]
-            let qrCodeRequest = request(qrCodeUrl, method: .get, headers: nil)
-            qrCodeRequest.responseJSON(completionHandler: { (response: DataResponse<Any>) in
-                switch response.result {
-                case .success(let value):
-                    let returnJSON = JSON(value)
-                    
-                    let canUseCoupon = returnJSON["can_use_cupon"].boolValue // user能否使用Coupon
-                    let onSale = returnJSON["dinner"].dictionaryValue["onsale"]?.boolValue // 店家目前有無提供優惠
-                    let onSaleContent = returnJSON["dinner"].dictionaryValue["onsale_content"]?.stringValue // 優惠內容
-                    let returnMessage = returnJSON["message"].stringValue // server的回應訊息
-                    
-                    print(returnJSON)
-                    
-                    if canUseCoupon == false || onSale == false {
-                        // 已使用過優惠 或 該店家目前無優惠
-                        self.canUseCupon = canUseCoupon
-                        self.canUseCuponMessage = returnMessage + "~"
-                    }
-                    else if canUseCoupon == true && onSale == true {
-                        // 使用優惠成功
-                        self.canUseCupon = canUseCoupon
-                        self.canUseCuponMessage = onSaleContent! + "~"
-                    }
-                case .failure(let error):
-                    self.showAlertWithMessage(alertMessage: "傳送失敗，請再試一次～")
-                    print("=====\(error.localizedDescription)=====")
-                }
-            })
-            
-            if self.canUseCupon != nil {
-                if self.canUseCupon == true {
-                    // 使用優惠成功後將QRCode相關設置清除
-                    self.captureSession?.stopRunning()
-                    self.videoPreviewLayer?.removeFromSuperlayer()
-                    self.qrCodeFrameView?.removeFromSuperview()
-                    // 顯示成功資訊
-                    self.QRCodeMessageLabel.text = ""
-                    self.view.bringSubview(toFront: self.successImageView)
-                    self.view.bringSubview(toFront: self.successLabel)
-                    
-                    self.QRCodeMessageLabel.text = self.canUseCuponMessage
-                } else if self.canUseCupon == false {
-                    // 已使用過優惠顯示提醒訊息
-                    self.QRCodeMessageLabel.text = self.canUseCuponMessage
-                }
-            }
-        }
     }
     
     

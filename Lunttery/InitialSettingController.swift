@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import CoreLocation
 
-class InitialSettingController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class InitialSettingController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, CLLocationManagerDelegate {
 
     //MARK:- Variables
     let priceArray    = ["100元以內", "150元以內", "300元以內"]
@@ -22,7 +23,9 @@ class InitialSettingController: UIViewController, UIPickerViewDataSource, UIPick
     var isLeastOne = false
     var leastOneTag = 0
     
-    var myDefaults = UserDefaults.standard
+    let myAppDelegate = UIApplication.shared.delegate as! AppDelegate
+    let locationManager = CLLocationManager()
+    let myDefaults = UserDefaults.standard
     let myCalendar = Calendar.current
     
     //MARK:- @IBOutlet
@@ -91,7 +94,6 @@ class InitialSettingController: UIViewController, UIPickerViewDataSource, UIPick
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        
         // 修改導覽列文字的顏色，字型
         let textForegroundColor = UIColor(red: 255.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0)
         //let textFont = UIFont.systemFont(ofSize: 30, weight: UIFontWeightSemibold)
@@ -134,6 +136,10 @@ class InitialSettingController: UIViewController, UIPickerViewDataSource, UIPick
         changeButtonDisplay(isSelected: styleSelected[japanButton.tag]!, button: japanButton)
         changeButtonDisplay(isSelected: styleSelected[vietnamButton.tag]!, button: vietnamButton)
         changeButtonDisplay(isSelected: styleSelected[koreaButton.tag]!, button: koreaButton)
+        
+        // 配置locationManager
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
 
     override func didReceiveMemoryWarning() {
@@ -164,6 +170,29 @@ class InitialSettingController: UIViewController, UIPickerViewDataSource, UIPick
     }
 
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // 在 viewWillAppear 方法而不是其它方法中檢查用戶授權狀態，是因為有用戶會去設置程序中修改授權，然後又回到 App。因此我們需要在這時重新對用戶授權狀態進行檢查。
+        if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.notDetermined {
+            // 還沒有詢問過用戶以獲得權限
+            locationManager.requestWhenInUseAuthorization()
+        } else if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.denied {
+            // 用戶不同意
+            self.showAlertWithMessage(alertMessage: "已拒絕啟用定位服務。請從設置程序中重新啟用。")
+        } else if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse {
+            // 用戶已經同意
+            locationManager.startUpdatingLocation()
+        }
+    }
+
+    //MARK:- CLLocationManagerDelegate protocol
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            myAppDelegate.myLocation = location
+        }
+    }
+    
     //MARK:- UIPickerView Protocol
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -181,6 +210,10 @@ class InitialSettingController: UIViewController, UIPickerViewDataSource, UIPick
         }
     }
 
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return self.view.frame.size.height * (50 / 667)
+    }
+    
     //MARK: - User Defined Method
     func changeButtonDisplay(isSelected: Bool, button: UIButton) {
         if isSelected == false {

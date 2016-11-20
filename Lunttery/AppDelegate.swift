@@ -51,6 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             myDefaults.set(user_Auth, forKey: "user_Auth")
         }
         
+        
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
         return true

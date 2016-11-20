@@ -84,6 +84,7 @@ class MapController: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
             // 1.The ViewController is the delegate of the MKMapViewDelegate protocol
             // 2.Set the latitude and longtitude of the locations
             let sourceLocation = currentLocation.coordinate
+            
             let destinationLocation = CLLocation(latitude: dinnerData["lat"].doubleValue, longitude: dinnerData["lng"].doubleValue).coordinate
             
             // 3.Create placemark objects containing the location's coordinates
@@ -114,7 +115,7 @@ class MapController: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
             let directionrRequest = MKDirectionsRequest()
             directionrRequest.source = sourceMapItem
             directionrRequest.destination = destinationMapItem
-            directionrRequest.transportType = .automobile
+            directionrRequest.transportType = .walking
             // Calculate the direction
             let directions = MKDirections(request: directionrRequest)
             

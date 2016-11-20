@@ -30,7 +30,12 @@ class UserFavoriteController: UIViewController {
             menuButton.target = self.revealViewController()
             menuButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
             
-            //self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            // Simply ease out. No Spring animation.
+            self.revealViewController().toggleAnimationType = SWRevealToggleAnimationType.easeOut
+            // slide animation time
+            //self.revealViewController().toggleAnimationDuration = 0.3;
+            
+            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         
         // 修改導覽列文字的顏色，字型

@@ -19,8 +19,10 @@
  Controller.
 */
 
-
-//原文參考：http://www.appcoda.com/sidebar-menu-swift/
+//author github：https://github.com/John-Lluch/SWRevealViewController/blob/master/README.md
+//參考1：http://www.appcoda.com/sidebar-menu-swift/
+//參考2：http://samwize.com/2015/03/25/setting-up-swrevealviewcontroller/
+//參考3：http://www.ebc.cat/2015/03/07/customize-your-swrevealviewcontroller-slide-out-menu/
 
 //簡易操作步驟
 // step1. 拉一個空的view controller到storyboard上，設定其class為SWRevealViewController

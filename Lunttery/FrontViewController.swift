@@ -17,11 +17,12 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
     //MARK:- Variables
     let myDefaults = UserDefaults.standard
     let locationManager = CLLocationManager()
-    var myAppDelegate = UIApplication.shared.delegate as! AppDelegate
+    let myAppDelegate = UIApplication.shared.delegate as! AppDelegate
     var myUserSetting: UserSetting? = nil
     var isFirstQuery: Bool = false
     var returnJSON: JSON?
     var myUserAuth: [String: Any]!
+    var overlay: UIView?
     
     //MARK:- @IBOutlet
     @IBOutlet weak var menuButton: UIBarButtonItem!
@@ -41,10 +42,14 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
             // demo1 -> 四平陽光商圈 lat:25.0529708,lng:121.5315674
             myAppDelegate.myLocation = CLLocation(latitude: 25.0529708, longitude: 121.5315674)
             // demo2 -> 未來產房 lat:25.054724,lng:121.542903
-            //myAppDelegate.myLocation = CLLocation(latitude: 25.054724, longitude: 121.542903)
+            myAppDelegate.myLocation = CLLocation(latitude: 25.054724, longitude: 121.542903)
         //}
 
-        let myCoordinate = (myAppDelegate.myLocation?.coordinate)!
+        var myCoordinate = CLLocation(latitude: 0.0, longitude: 0.0).coordinate
+        
+        if myAppDelegate.myLocation?.coordinate != nil {
+            myCoordinate = (myAppDelegate.myLocation?.coordinate)!
+        }
         
         var myStyleArray = [String]()
         
@@ -53,6 +58,7 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
                 myStyleArray.append(String(item.key))
             }
         }
+        
         // http://103.3.61.129/api/meals?lat=25.0521723&lng=121.5321898&distant=0.1&style_ids=1,3,4&price=101
         /* 呼叫API */
         let queryUrl = "http://103.3.61.129/api/meals"
@@ -71,27 +77,25 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
         queryRequest.responseJSON(completionHandler: { (response: DataResponse<Any>) in
             switch response.result {
             case .success(let value):
-                
                 self.returnJSON = JSON(value)
-                
                 //print("returnJSON:\(self.returnJSON)")
-                
-                UIView.animate(withDuration: 0.7, animations: {
-                    //if self.isFirstQuery == true {
-                        self.queryButton.isHidden = true
-                        self.luntteryLabel.isHidden = true
-                        self.luntteryImageView.image = nil
-                    
+
+                UIView.animate(withDuration: 0.5, animations: {
+                    if self.isFirstQuery == true {
+                        self.heartImageView.image = UIImage(named: "like")
+                        self.decisionLabel.text = "今天就吃這個吧！"
+                        self.emoticonLabel.text = "ψ(｀∇´)ψ"
+                        
                         self.view.bringSubview(toFront: self.heartImageView)
                         self.view.bringSubview(toFront: self.emoticonLabel)
                         self.view.bringSubview(toFront: self.decisionLabel)
-                        
-                        //self.myDefaults.set(false, forKey: "isFirstQuery")
-                    //}
+                    }
                 }, completion: { (animated: Bool) in
-                    // 延遲0.7秒
-                    let _ = Timer.scheduledTimer(timeInterval: 0.7, target: self, selector: #selector(self.myPerform(timer:)), userInfo: nil, repeats: false)
+                    self.myDefaults.set(false, forKey: "isFirstQuery")
+                    // 延遲0.5秒
+                    let _ = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(self.myPerform(timer:)), userInfo: nil, repeats: false)
                 })
+                
             case .failure(let error):
                 self.showAlertWithMessage(alertMessage: "查詢失敗，請再試一次～")
                 print("=====\(error.localizedDescription)=====")
@@ -113,13 +117,12 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
             menuButton.target = self.revealViewController()
             menuButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
             
-            //self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            // Simply ease out. No Spring animation.
+            self.revealViewController().toggleAnimationType = SWRevealToggleAnimationType.easeOut
+            // slide animation time
+            //self.revealViewController().toggleAnimationDuration = 0.3;
             
-            // 第一次使用App,導引至偏好設定畫面
-            let isFirstLaunch = myDefaults.bool(forKey: "isFirstLaunch")
-            if isFirstLaunch == true {
-                self.performSegue(withIdentifier: "front_to_set", sender: nil)
-            }
+            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         
         if myDefaults.object(forKey: "isFirstQuery") != nil {
@@ -152,6 +155,12 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
         // 配置locationManager
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
+
+        // 第一次使用App,導引至偏好設定畫面
+        let isFirstLaunch = myDefaults.bool(forKey: "isFirstLaunch")
+        if isFirstLaunch == true {
+            self.performSegue(withIdentifier: "front_to_set", sender: nil)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -161,15 +170,13 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         // 讀取使用者登入資訊
         if myDefaults.object(forKey: "user_Auth") != nil {
             myUserAuth = myDefaults.object(forKey: "user_Auth") as? [String : Any]
         }
-    }
-    
-    // 在 viewDidAppear 方法而不是其它方法中檢查用戶授權狀態，是因為有用戶會去設置程序中修改授權，然後又回到 App。因此我們需要在這時重新對用戶授權狀態進行檢查。
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        
+        // 在 viewWillAppear 方法而不是其它方法中檢查用戶授權狀態，是因為有用戶會去設置程序中修改授權，然後又回到 App。因此我們需要在這時重新對用戶授權狀態進行檢查。
         if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.notDetermined {
             // 還沒有詢問過用戶以獲得權限
             locationManager.requestWhenInUseAuthorization()
@@ -180,11 +187,22 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
             // 用戶已經同意
             locationManager.startUpdatingLocation()
         }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         // 畫面呈現時，讀取UserSetting
         if myDefaults.object(forKey: "UserSetting") != nil {
             let savedUserSettingData = myDefaults.object(forKey: "UserSetting") as! Data
             myUserSetting = NSKeyedUnarchiver.unarchiveObject(with:savedUserSettingData) as? UserSetting
+
+            if isFirstQuery == false {
+                self.overlay = self.showActivityIndicator(with: self.view)
+            }
+
+            // 開始查詢
+            oneTouchSearch(self)
         }
     }
     
@@ -197,11 +215,21 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
     
     //MARK:- User Defined Method
     func myPerform(timer: Timer) {
+        if let myOverlay = self.overlay {
+            myOverlay.removeFromSuperview()
+        }
+        
         self.performSegue(withIdentifier: "front_to_meal", sender: nil)
+        
+//        print("===revealViewController:\(self.revealViewController())")
+//        print("===revealViewController.childViewControllers:\(self.revealViewController().childViewControllers)")
+//        
+//        print("===revealViewController.childViewControllers[0].childViewControllers:\(self.revealViewController().childViewControllers[0].childViewControllers)")
+//        print("===revealViewController.childViewControllers[0].childViewControllers[0]:\(self.revealViewController().childViewControllers[0].childViewControllers[0])")
     }
     
     func resetViewDisplay() {
-        self.luntteryImageView.image = UIImage(named: "frontImage")
+        self.luntteryImageView.image = nil
         self.queryButton.isHidden = false
         self.luntteryLabel.isHidden = false
  
