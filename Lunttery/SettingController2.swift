@@ -1,14 +1,14 @@
 //
-//  TemporarySettingController.swift
+//  SettingController.swift
 //  Lunttery
 //
-//  Created by Ollie on 2016/11/21.
+//  Created by Ollie on 2016/11/10.
 //  Copyright © 2016年 Ollie. All rights reserved.
 //
 
 import UIKit
 
-class SettingController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class SettingController2: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     //MARK:- Variables
     let priceArray    = ["100元以內", "150元以內", "300元以內"]
@@ -22,7 +22,7 @@ class SettingController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     var leastOneTag = 0
     var myDefaults = UserDefaults.standard
     let myCalendar = Calendar.current
-    
+        
     //MARK:- @IBOutlet
     @IBOutlet weak var menuButton: UIBarButtonItem!
     @IBOutlet weak var noticeTimePicker: UIDatePicker!
@@ -79,8 +79,12 @@ class SettingController: UIViewController, UIPickerViewDataSource, UIPickerViewD
             }
         }
     }
-
+    
     //MARK:- Self func
+    deinit {
+        print("=====SettingController deinit=====")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -104,12 +108,12 @@ class SettingController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         let textFont = UIFont(name: ".PingFangTC-Semibold", size: 30)
         let textArttribute = [NSForegroundColorAttributeName: textForegroundColor, NSFontAttributeName: textFont]
         self.navigationController?.navigationBar.titleTextAttributes = textArttribute
-     
+        
         pricePicker.delegate = self
         pricePicker.dataSource = self
         distancePicker.delegate = self
         distancePicker.dataSource = self
-
+ 
         // 檢查UserSetting是否已存在UserDefaults中
         if myDefaults.object(forKey: "UserSetting") == nil {
             // init UserSetting values
@@ -117,7 +121,6 @@ class SettingController: UIViewController, UIPickerViewDataSource, UIPickerViewD
             let myDateFormatter = DateFormatter()
             myDateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
             let setTime = myDateFormatter.date(from: timeString)
-            
             noticeTimePicker.setDate(setTime!, animated: true)
             
             pricePicker.selectRow(0, inComponent: 0, animated: true)
@@ -212,10 +215,32 @@ class SettingController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         }
     }
 
-    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return self.view.frame.size.height * (50 / 667)
+    // Customize pickerView Text
+    /*
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        var label = view as? UILabel
+        if label == nil {
+            label = UILabel()
+        }
+        
+        var titleText = ""
+        if pickerView.restorationIdentifier == "pricePicker" {
+            titleText = priceArray[row]
+        } else {
+            titleText = distanceArray[row]
+        }
+        
+        let textForegroundColor = UIColor(red: 124.0/255.0, green: 124.0/255.0, blue: 124.0/255.0, alpha: 1.0)
+        let textFont = UIFont(name: ".PingFangTC-Semibold", size: 30)
+        let textArttribute = [NSForegroundColorAttributeName: textForegroundColor, NSFontAttributeName: textFont!]
+        
+        label?.attributedText = NSAttributedString(string: titleText, attributes: textArttribute)
+        label?.textAlignment = .center
+        
+        return label!
     }
-    
+    */
+ 
     //MARK: - User Defined Method
     func changeButtonDisplay(isSelected: Bool, button: UIButton) {
         if isSelected == false {
@@ -240,5 +265,5 @@ class SettingController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         // Pass the selected object to the new view controller.
     }
     */
-
 }
+

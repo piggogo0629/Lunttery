@@ -39,13 +39,6 @@ class InitialSettingController: UIViewController, UIPickerViewDataSource, UIPick
     @IBOutlet weak var koreaButton: UIButton!
     
     //MARK:- @IBAction
-//    @IBAction func close(_ sender: UIButton) {
-//        if self.revealViewController() != nil {
-//            self.revealViewController().performSegue(withIdentifier: "sw_front", sender: nil)
-//        }
-//        self.dismiss(animated: true, completion: nil)
-//    }
-    
     @IBAction func selectStyle(_ sender: UIButton) {
         // 至少要選一個
         if mySelectedCount >= 1 {

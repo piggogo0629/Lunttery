@@ -16,6 +16,7 @@ class MapController: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
     var dinnerData: JSON!
     let locationManager = CLLocationManager()
     var overlayView: UIView? = nil
+    var directionrRequest = MKDirectionsRequest()
     //var currentLocation: CLLocation?
     
     //MARK:- @IBOutlet
@@ -83,6 +84,7 @@ class MapController: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
         if let currentLocation = locations.first {
             // 1.The ViewController is the delegate of the MKMapViewDelegate protocol
             // 2.Set the latitude and longtitude of the locations
+            
             let sourceLocation = currentLocation.coordinate
             
             let destinationLocation = CLLocation(latitude: dinnerData["lat"].doubleValue, longitude: dinnerData["lng"].doubleValue).coordinate
@@ -110,7 +112,7 @@ class MapController: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
             self.myMapView.showAnnotations([sourceAnnotation, destinationAnnotation], animated: true)
             // 不需按下大頭針即顯示標注泡泡框(callout bubble)
             self.myMapView.selectAnnotation(destinationAnnotation, animated: true)
-            
+
             // 7.The MKDirectionsRequest class is used to compute the route.
             let directionrRequest = MKDirectionsRequest()
             directionrRequest.source = sourceMapItem
@@ -118,7 +120,7 @@ class MapController: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
             directionrRequest.transportType = .walking
             // Calculate the direction
             let directions = MKDirections(request: directionrRequest)
-            
+           
             //8.The route will be drawn using a polyline as a overlay view on top of the map. The region is set so both locations will be visible
             directions.calculate(completionHandler: { (response: MKDirectionsResponse?, error: Error?) in
                 if error != nil {
@@ -134,6 +136,7 @@ class MapController: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
             })
             
             manager.stopUpdatingLocation()
+            
             // 9.implement the delegate method mapView(rendererForrOverlay:). This method return the renderer object which will be used to draw the route on the map.
         }
     }

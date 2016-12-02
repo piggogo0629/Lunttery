@@ -38,11 +38,11 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
     @IBAction func oneTouchSearch(_ sender: Any) {
          //if myLocation == nil {
             // default -> 松江南京站 lat:25.0512257,lng:121.5305447
-            //myAppDelegate.myLocation = CLLocation(latitude: 25.0512257, longitude: 121.5305447)
+            myAppDelegate.myLocation = CLLocation(latitude: 25.0512257, longitude: 121.5305447)
             // demo1 -> 四平陽光商圈 lat:25.0529708,lng:121.5315674
-            myAppDelegate.myLocation = CLLocation(latitude: 25.0529708, longitude: 121.5315674)
+            //myAppDelegate.myLocation = CLLocation(latitude: 25.0529708, longitude: 121.5315674)
             // demo2 -> 未來產房 lat:25.054724,lng:121.542903
-            myAppDelegate.myLocation = CLLocation(latitude: 25.054724, longitude: 121.542903)
+            //myAppDelegate.myLocation = CLLocation(latitude: 25.054724, longitude: 121.542903)
         //}
 
         var myCoordinate = CLLocation(latitude: 0.0, longitude: 0.0).coordinate
@@ -80,20 +80,24 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
                 self.returnJSON = JSON(value)
                 //print("returnJSON:\(self.returnJSON)")
 
-                UIView.animate(withDuration: 0.5, animations: {
+                UIView.animate(withDuration: 0.35, animations: {
                     if self.isFirstQuery == true {
-                        self.heartImageView.image = UIImage(named: "like")
-                        self.decisionLabel.text = "今天就吃這個吧！"
-                        self.emoticonLabel.text = "ψ(｀∇´)ψ"
+                        //self.heartImageView.image = UIImage(named: "like")
+                        //self.decisionLabel.text = "今天就吃這個吧！"
+                        //self.emoticonLabel.text = "ψ(｀∇´)ψ"
                         
-                        self.view.bringSubview(toFront: self.heartImageView)
-                        self.view.bringSubview(toFront: self.emoticonLabel)
-                        self.view.bringSubview(toFront: self.decisionLabel)
+                        //self.view.bringSubview(toFront: self.heartImageView)
+                        //self.view.bringSubview(toFront: self.emoticonLabel)
+                        //self.view.bringSubview(toFront: self.decisionLabel)
+                        
+                        self.heartImageView.isHidden = false
+                        self.decisionLabel.isHidden  = false
+                        self.emoticonLabel.isHidden  = false
                     }
                 }, completion: { (animated: Bool) in
                     self.myDefaults.set(false, forKey: "isFirstQuery")
                     // 延遲0.5秒
-                    let _ = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(self.myPerform(timer:)), userInfo: nil, repeats: false)
+                    let _ = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(self.myPerform(timer:)), userInfo: nil, repeats: false)
                 })
                 
             case .failure(let error):
@@ -161,6 +165,10 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
         if isFirstLaunch == true {
             self.performSegue(withIdentifier: "front_to_set", sender: nil)
         }
+        
+        heartImageView.isHidden = true
+        decisionLabel.isHidden  = true
+        emoticonLabel.isHidden  = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -191,7 +199,6 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         // 畫面呈現時，讀取UserSetting
         if myDefaults.object(forKey: "UserSetting") != nil {
             let savedUserSettingData = myDefaults.object(forKey: "UserSetting") as! Data
