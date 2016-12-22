@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 class SettingController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
@@ -20,8 +21,9 @@ class SettingController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     var mySelectedCount = 0
     var isLeastOne = false
     var leastOneTag = 0
-    var myDefaults = UserDefaults.standard
+    let myDefaults = UserDefaults.standard
     let myCalendar = Calendar.current
+    let myNotiCenter = UNUserNotificationCenter.current()
     
     //MARK:- @IBOutlet
     @IBOutlet weak var menuButton: UIBarButtonItem!
@@ -43,6 +45,7 @@ class SettingController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     }
     
     @IBAction func selectStyle(_ sender: UIButton) {
+        // 至少要選一個
         if mySelectedCount >= 1 {
             // 是最後一個且點到一樣的button -> return
             if isLeastOne == true && sender.tag == leastOneTag {
@@ -92,6 +95,7 @@ class SettingController: UIViewController, UIPickerViewDataSource, UIPickerViewD
             
             // Simply ease out. No Spring animation.
             self.revealViewController().toggleAnimationType = SWRevealToggleAnimationType.easeOut
+            
             // slide animation time
             //self.revealViewController().toggleAnimationDuration = 0.3;
             
@@ -145,9 +149,19 @@ class SettingController: UIViewController, UIPickerViewDataSource, UIPickerViewD
                 pricePicker.selectRow(pricePickerIndex!, inComponent: 0, animated: true)
                 distancePicker.selectRow(distancePickerIndex!, inComponent: 0, animated: true)
                 
+                var countDownNumber = styleSelected.count - 1
+                
                 for item in styleSelected {
+                    countDownNumber -= 1
+                    
                     if item.value == true {
                         mySelectedCount += 1
+                    }
+                    
+                    // 最後一次時，檢查：如果偏好只設定一種，則要賦值給 leastOneTag & isLeastOne，避免點擊後全部都不選的狀況
+                    if countDownNumber == 0 && mySelectedCount == 1 {
+                         leastOneTag = item.key
+                         isLeastOne = true
                     }
                 }
             }
@@ -160,6 +174,15 @@ class SettingController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         changeButtonDisplay(isSelected: styleSelected[japanButton.tag]!, button: japanButton)
         changeButtonDisplay(isSelected: styleSelected[vietnamButton.tag]!, button: vietnamButton)
         changeButtonDisplay(isSelected: styleSelected[koreaButton.tag]!, button: koreaButton)
+        
+        // 向User申請通知權限
+        myNotiCenter.requestAuthorization(options: [.alert, .sound]) { (granted: Bool, error: Error?) in
+            if granted == true {
+                print("user noti requset success")
+            } else {
+                print("user noti requset denied")
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -193,6 +216,9 @@ class SettingController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         let archivedUserSetting = NSKeyedArchiver.archivedData(withRootObject: myUserSetting!)
         
         myDefaults.setValue(archivedUserSetting, forKey: "UserSetting")
+        
+        // 建立＆發送通知
+        scheduleLocal(noticeTime: noticeTime)
     }
     
     //MARK:- UIPickerView Protocol
@@ -231,14 +257,29 @@ class SettingController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         }
     }
     
+    func scheduleLocal(noticeTime: Date) {
+        //schedule a notification, which is three things: content (what to show), a trigger (when to show it), and a request (the combination of content and trigger.)
+        //can add new request with the same identifier to update a notification.
+        
+        let content = UNMutableNotificationContent()
+        content.title = "Lunttery~"
+        content.body = "又到了午餐時間囉！趕快打開Lunttery吧！"
+        content.sound = UNNotificationSound.default()
+        
+        let dateComponent = myCalendar.dateComponents([.hour, .minute], from: noticeTime)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponent, repeats: true)
+        
+        let request = UNNotificationRequest(identifier: "noticeTime", content: content, trigger: trigger)
+        
+        myNotiCenter.add(request, withCompletionHandler: nil)
+    }
+    
     /*
     // MARK: - Navigation
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
     */
-
 }

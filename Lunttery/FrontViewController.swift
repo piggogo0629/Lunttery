@@ -28,7 +28,6 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var menuButton: UIBarButtonItem!
     @IBOutlet weak var queryButton: UIButton!
     @IBOutlet weak var luntteryLabel: UILabel!
-    @IBOutlet weak var luntteryImageView: UIImageView!
     
     @IBOutlet weak var heartImageView: UIImageView!
     @IBOutlet weak var decisionLabel: UILabel!
@@ -78,17 +77,9 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
             switch response.result {
             case .success(let value):
                 self.returnJSON = JSON(value)
-                //print("returnJSON:\(self.returnJSON)")
-
+                
                 UIView.animate(withDuration: 0.35, animations: {
                     if self.isFirstQuery == true {
-                        //self.heartImageView.image = UIImage(named: "like")
-                        //self.decisionLabel.text = "今天就吃這個吧！"
-                        //self.emoticonLabel.text = "ψ(｀∇´)ψ"
-                        
-                        //self.view.bringSubview(toFront: self.heartImageView)
-                        //self.view.bringSubview(toFront: self.emoticonLabel)
-                        //self.view.bringSubview(toFront: self.decisionLabel)
                         
                         self.heartImageView.isHidden = false
                         self.decisionLabel.isHidden  = false
@@ -96,7 +87,7 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
                     }
                 }, completion: { (animated: Bool) in
                     self.myDefaults.set(false, forKey: "isFirstQuery")
-                    // 延遲0.5秒
+                    // 延遲0.25秒
                     let _ = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(self.myPerform(timer:)), userInfo: nil, repeats: false)
                 })
                 
@@ -228,15 +219,17 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
         
         self.performSegue(withIdentifier: "front_to_meal", sender: nil)
         
-//        print("===revealViewController:\(self.revealViewController())")
-//        print("===revealViewController.childViewControllers:\(self.revealViewController().childViewControllers)")
-//        
-//        print("===revealViewController.childViewControllers[0].childViewControllers:\(self.revealViewController().childViewControllers[0].childViewControllers)")
-//        print("===revealViewController.childViewControllers[0].childViewControllers[0]:\(self.revealViewController().childViewControllers[0].childViewControllers[0])")
+        /*
+        print("===revealViewController:\(self.revealViewController())")
+        print("===revealViewController.childViewControllers:\(self.revealViewController().childViewControllers)")
+        print("===revealViewController.childViewControllers[0].childViewControllers:\(self.revealViewController().childViewControllers[0].childViewControllers)")
+        print("===revealViewController.childViewControllers[0].childViewControllers[0]:\(self.revealViewController().childViewControllers[0].childViewControllers[0])")
+        */
     }
     
+    // 返回畫面時，會執行的動作
+    /*
     func resetViewDisplay() {
-        self.luntteryImageView.image = nil
         self.queryButton.isHidden = false
         self.luntteryLabel.isHidden = false
  
@@ -244,7 +237,8 @@ class FrontViewController: UIViewController, CLLocationManagerDelegate {
         self.view.sendSubview(toBack: self.emoticonLabel)
         self.view.sendSubview(toBack: self.decisionLabel)
     }
-    
+    */
+ 
     // MARK: - Navigation
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

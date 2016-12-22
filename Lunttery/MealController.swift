@@ -59,6 +59,7 @@ class MealController: UIViewController {
             
             // http://103.3.61.129/api/meals/MEAL_ID/user_meal_likeships/USER_ID/edit
             let updateLikeUrl = "http://103.3.61.129/api/meals/\(myMealId!)/user_meal_likeships/\(myUserId)/edit"
+            
             let updateLikeRequest = request(updateLikeUrl, method: .get, headers: nil)
             updateLikeRequest.responseJSON(completionHandler: { (response: DataResponse<Any>) in
                 switch response.result {
@@ -94,13 +95,9 @@ class MealController: UIViewController {
         let dinnerId = currentMealData["dinner"].dictionaryValue["id"]?.intValue
         let authToken = myUserAuth["auth_token"] as! String
         
-        //print("dinner_auth:\(authToken)")
-        
         let menulUrl = "http://103.3.61.129/api/dinners"
         let paras: Parameters = ["id": dinnerId!, "auth_token": authToken]
         let menuRequert = request(menulUrl, method: .get, parameters: paras, encoding: URLEncoding.default, headers: nil)
-        
-        //print("request:\(menuRequert)")
         
         menuRequert.responseJSON { (response: DataResponse<Any>) in
             switch response.result {
@@ -152,11 +149,12 @@ class MealController: UIViewController {
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         
-        //self.navigationItem.hidesBackButton = true
+        /* 自定義返回動作
         let newBackButton = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.plain, target: self, action: #selector(back(sender:)))
-        //newBackButton.image = UIImage(named: "reply")
+        newBackButton.image = UIImage(named: "reply")
         self.navigationItem.leftBarButtonItem = newBackButton
-        
+        */
+ 
         // 修改導覽列文字的顏色，字型
         let textForegroundColor = UIColor(red: 255.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0)
         //let textFont = UIFont.systemFont(ofSize: 30, weight: UIFontWeightSemibold)
@@ -193,8 +191,14 @@ class MealController: UIViewController {
         // 畫面載入時顯示第一筆
         viewDisplay(data: mealDataArray[0])
         
-        print("\(mealDataArray)")
-
+        //print("\(mealDataArray)")
+        //print("\(mealDataArray[0].dictionaryObject)")
+        
+        let dicObj = mealDataArray[0].dictionaryObject!
+        
+        let dicJSON = JSON([dicObj])
+        
+        print("===dicJSON:\(dicJSON)")
     }
 
     override func didReceiveMemoryWarning() {
@@ -215,7 +219,7 @@ class MealController: UIViewController {
         // Perform your custom actions
         // Go back to the previous ViewController
         let frontViewController = navigationController?.childViewControllers[0] as! FrontViewController
-        frontViewController.resetViewDisplay()
+        //frontViewController.resetViewDisplay()
         let _ = self.navigationController?.popToViewController(frontViewController, animated: true)
     }
 
@@ -278,6 +282,53 @@ class MealController: UIViewController {
         } else {
             likeButton.setImage(UIImage(named: "dislike"), for: UIControlState.normal)
         }
+        
+        // 將顯示的資料儲存 -> 歷程紀錄使用
+        
+    }
+    
+    func saveToUserRecord(mealData: JSON) {
+        let mealDicObj = mealData.dictionaryObject!
+        let mealId = mealData["id"].intValue
+        
+        var recordArray: [[String:Any]]
+        
+        if myDefaults.object(forKey: "UserRecord") != nil {
+            recordArray = myDefaults.object(forKey: "UserRecord") as! [[String : Any]]
+        } else {
+            recordArray = [[String:Any]]()
+        }
+        
+        // 判斷是否已存在於recordArray中
+        for i in 0...recordArray.count - 1 {
+            let eachId = recordArray[i]["id"] as! Int
+            
+            if mealId == eachId {
+                // 移動該meal Data到最後一個
+               recordArray = rearrange(array: recordArray, fromIndex: i, toIndex: recordArray.count - 1)
+            }  else {
+                // 新增
+                recordArray.append(mealDicObj)
+            }
+        }
+        
+        // recordArray數量最多固定為10個
+        if recordArray.count > 10 {
+            for i in 0...recordArray.count - 11 {
+                recordArray.remove(at: i)
+            }
+        }
+        
+        // 儲存到UserDefaults
+        self.myDefaults.set(recordArray, forKey: "UserRecord")
+    }
+    
+    func rearrange<T>(array: Array<T>, fromIndex: Int, toIndex: Int) -> Array<T> {
+        var myArray = array
+        let element = myArray.remove(at: fromIndex)
+        myArray.insert(element, at: toIndex)
+        
+        return myArray
     }
     
     // MARK: - Navigation

@@ -50,7 +50,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let user_Auth = ["user_id": 0, "auth_token": ""] as [String : Any]
             myDefaults.set(user_Auth, forKey: "user_Auth")
         }
-        
+        // 記錄使用者的歷程記錄
+        if myDefaults.object(forKey: "UserRecord") == nil {
+            let record = [[String:Any]]()
+            myDefaults.set(record, forKey: "UserRecord")
+        }
         
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         

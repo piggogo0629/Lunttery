@@ -25,11 +25,6 @@ class LoginController: UIViewController, FBSDKLoginButtonDelegate {
     @IBOutlet weak var signUpButton: UIButton!
     
     //MARK:- @IBAction
-    @IBAction func demoUser(_ sender: UIButton) {
-        emailTextField.text = "berinechou@gmail.com"
-        passwordTextField.text = "zxc770629"
-    }
-    
     @IBAction func touchDownToCloseKeyboard(_ sender: UIControl) {
         emailTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
