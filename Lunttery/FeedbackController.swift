@@ -70,14 +70,16 @@ class FeedbackController: UIViewController, UITextViewDelegate {
             self.showAlertWithMessage(alertMessage: alertMessage)
         } else {
             // 通過驗證 -> call API 傳送資料 ＆ 顯示成功圖片及文字
-            /* 呼叫API */
-            //let feedbackUrl = ""
-            //let paras: Parameters = ["name": "", "email": "", "content": ""]
-            //let feedbackRequest = request(feedbackUrl, method: .post, parameters: paras, encoding: URLEncoding.default, headers: nil)
-            //feedbackRequest.responseJSON(completionHandler: { (response: DataResponse<Any>) in
-                //switch response.result {
-                //case .success(let value):
+            /* 呼叫API : http://103.3.61.129/api/comments?name=USER_NAME&email=USER_EMAIL&suggestion=USER_SUGGESTION */
+            
+            let feedbackUrl = "http://103.3.61.129/api/comments"
+            let paras: Parameters = ["name": nameText, "email": emailText, "suggestion": feedbackText]
+            let feedbackRequest = request(feedbackUrl, method: .post, parameters: paras, encoding: URLEncoding.default, headers: nil)
+            feedbackRequest.responseJSON(completionHandler: { (response: DataResponse<Any>) in
+                switch response.result {
+                case .success(let value):
                     //let returnJSON = JSON(value)
+                    //print("returnJSON:\(returnJSON)")
                     
                     self.InfoLabel.isHidden = true
                     self.nameTextField.isHidden = true
@@ -92,11 +94,11 @@ class FeedbackController: UIViewController, UITextViewDelegate {
                     self.closeButton.titleLabel?.font = UIFont(name: ".PingFangTC-Medium", size: 24)
                     self.closeButton.backgroundColor = UIColor(red: 255.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0)
                 
-                //case .failure(let error):
-                    //self.showAlertWithMessage(alertMessage: "傳送失敗，請再試一次～")
-                    //print("=====\(error.localizedDescription)=====")
-                //}
-            //})
+                case .failure(let error):
+                    self.showAlertWithMessage(alertMessage: "傳送失敗，請再試一次～")
+                    print("=====\(error.localizedDescription)=====")
+                }
+            })
         }
     }
     

@@ -49,7 +49,8 @@ class MealController: UIViewController {
         viewDisplay(data: mealDataArray[mealDataArray.count - myTapCount])
         
         myTapCount += 1
-        //sender.setTitle("再一次(\(mealDataArray.count - myTapCount))", for: .normal)
+        
+        sender.setTitle("再一次(\(mealDataArray.count - myTapCount))", for: .normal)
     }
     
     @IBAction func addToMyFavorite(_ sender: UIButton) {
@@ -155,6 +156,8 @@ class MealController: UIViewController {
         self.navigationItem.leftBarButtonItem = newBackButton
         */
  
+        self.navigationItem.hidesBackButton = true
+        
         // 修改導覽列文字的顏色，字型
         let textForegroundColor = UIColor(red: 255.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0)
         //let textFont = UIFont.systemFont(ofSize: 30, weight: UIFontWeightSemibold)
@@ -177,7 +180,7 @@ class MealController: UIViewController {
         if let data = queryResult?["data"].array {
             mealDataArray = data
             
-            //playDiceButton.setTitle("再一次(\(mealDataArray.count-1))", for: .normal)
+            playDiceButton.setTitle("再一次(\(mealDataArray.count-1))", for: .normal)
         }
         
         if let isFind = queryResult?["is_find"].boolValue {
@@ -185,6 +188,9 @@ class MealController: UIViewController {
                 self.showAlertWithMessage(alertMessage: "很抱歉，Lunttery暫無合適資料提供給您！\n將以隨機資料替代")
             }
         }
+        
+        // 打亂陣列順序
+        mealDataArray = shuffleArray(array: mealDataArray)
         
         // 當前畫面的資料
         currentMealData = mealDataArray[0]
@@ -194,11 +200,8 @@ class MealController: UIViewController {
         //print("\(mealDataArray)")
         //print("\(mealDataArray[0].dictionaryObject)")
         
-        let dicObj = mealDataArray[0].dictionaryObject!
-        
-        let dicJSON = JSON([dicObj])
-        
-        print("===dicJSON:\(dicJSON)")
+        //let dic = mealDataArray[0].dictionaryValue
+        //print("===dic:\(dic)")
     }
 
     override func didReceiveMemoryWarning() {
@@ -206,8 +209,8 @@ class MealController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         // 讀取使用者登入資訊
         if myDefaults.object(forKey: "user_Auth") != nil {
             myUserAuth = myDefaults.object(forKey: "user_Auth") as! [String : Any]
@@ -215,6 +218,7 @@ class MealController: UIViewController {
     }
     
     //MARK: - User Defined Method
+    /*
     func back(sender: UIBarButtonItem) {
         // Perform your custom actions
         // Go back to the previous ViewController
@@ -222,7 +226,8 @@ class MealController: UIViewController {
         //frontViewController.resetViewDisplay()
         let _ = self.navigationController?.popToViewController(frontViewController, animated: true)
     }
-
+    */
+ 
     func viewDisplay(data: JSON) {
         // 餐點資訊
         let BasedUrl = "http://103.3.61.129"
@@ -284,7 +289,7 @@ class MealController: UIViewController {
         }
         
         // 將顯示的資料儲存 -> 歷程紀錄使用
-        
+        //saveToUserRecord(mealData: data)
     }
     
     func saveToUserRecord(mealData: JSON) {
@@ -299,16 +304,24 @@ class MealController: UIViewController {
             recordArray = [[String:Any]]()
         }
         
-        // 判斷是否已存在於recordArray中
-        for i in 0...recordArray.count - 1 {
-            let eachId = recordArray[i]["id"] as! Int
-            
-            if mealId == eachId {
-                // 移動該meal Data到最後一個
-               recordArray = rearrange(array: recordArray, fromIndex: i, toIndex: recordArray.count - 1)
-            }  else {
-                // 新增
-                recordArray.append(mealDicObj)
+        print("===count:\(recordArray.count)")
+        
+        if recordArray.count == 0 {
+            // 表示第一次進入，直接新增
+            recordArray.append(mealDicObj)
+        }
+        else {
+            // 判斷是否已存在於recordArray中
+            for i in 0...recordArray.count - 1 {
+                let eachId = recordArray[i]["id"] as! Int
+                
+                if mealId == eachId {
+                    // 移動該meal Data到最後一個
+                    recordArray = rearrange(array: recordArray, fromIndex: i, toIndex: recordArray.count - 1)
+                }  else {
+                    // 新增
+                    recordArray.append(mealDicObj)
+                }
             }
         }
         
@@ -321,12 +334,33 @@ class MealController: UIViewController {
         
         // 儲存到UserDefaults
         self.myDefaults.set(recordArray, forKey: "UserRecord")
+        
+        print("recordArray:\(recordArray)")
     }
     
     func rearrange<T>(array: Array<T>, fromIndex: Int, toIndex: Int) -> Array<T> {
         var myArray = array
         let element = myArray.remove(at: fromIndex)
         myArray.insert(element, at: toIndex)
+        
+        return myArray
+    }
+    
+    func shuffleArray<T>(array: [T]) -> Array<T> {
+        if array.count < 2 {
+            return array
+        }
+        
+        var myArray = array
+
+        for i in 0..<(myArray.count - 1) {
+            let j = Int(arc4random_uniform(UInt32(myArray.count - i))) + i
+            
+            if i != j {
+                // newIndex 和 oldIdex 交換
+                swap(&myArray[i], &myArray[j])
+            }
+        }
         
         return myArray
     }

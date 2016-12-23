@@ -173,15 +173,20 @@ class LoginController: UIViewController, FBSDKLoginButtonDelegate {
                                 
                                 self.myDefaults.set(user_Auth, forKey: "user_Auth")
                                 
-                                // 移除overlay
-                                overlay.removeFromSuperview()
-                                // 回到主畫面
-                                self.dismiss(animated: true, completion: nil)
                             } else {
                                 self.showAlertWithMessage(alertMessage: "登入失敗，請再試一次～")
                             }
+                            
+                            // 移除overlay
+                            overlay.removeFromSuperview()
+                            // 回到主畫面
+                            self.dismiss(animated: true, completion: nil)
                         case .failure(let error):
                             self.showAlertWithMessage(alertMessage: "傳送失敗，請再試一次～")
+                            // 移除overlay
+                            overlay.removeFromSuperview()
+                            // 回到主畫面
+                            self.dismiss(animated: true, completion: nil)
                             print("=====\(error.localizedDescription)=====")
                         }
                     })

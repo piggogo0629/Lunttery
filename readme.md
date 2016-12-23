@@ -143,7 +143,10 @@ step4. 在view controller中：create FBSDKLoginButton & 實作 FBSDKLoginButton
 - 參考2：[https://cg2010studio.com/2015/10/09/ios-facebook-sdk-%E5%8F%96%E5%BE%97%E5%B8%B3%E8%99%9F%E8%B3%87%E6%96%99/](https://cg2010studio.com/2015/10/09/ios-facebook-sdk-%E5%8F%96%E5%BE%97%E5%B8%B3%E8%99%9F%E8%B3%87%E6%96%99/)
 
 
-
+## 其他
+- Array 的 shuffle
+	- 參考1：[https://read01.com/NNADP.html](https://read01.com/NNADP.html)
+	- 參考2：[http://stackoverflow.com/questions/24026510/how-do-i-shuffle-an-array-in-swift/24029847#24029847](http://stackoverflow.com/questions/24026510/how-do-i-shuffle-an-array-in-swift/24029847#24029847)
 
 
 

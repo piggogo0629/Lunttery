@@ -101,13 +101,10 @@ class MenuController: UIViewController, UITableViewDelegate, UITableViewDataSour
         menuViewCell.priceLabel.text = "\(price) 元"
         menuViewCell.likeCountLabel.text = String(likeCount)
         
-        print("liked:\(isLike)")
-        
         if isLike == true {
             menuViewCell.likeButton.setImage(UIImage(named: "like"), for: UIControlState.normal)
         } else {
             menuViewCell.likeButton.setImage(UIImage(named: "dislike"), for: UIControlState.normal)
-            //menuViewCell.likeButton.imageView?.image = UIImage(named: "dislike")
         }
         
         // 圖片顯示

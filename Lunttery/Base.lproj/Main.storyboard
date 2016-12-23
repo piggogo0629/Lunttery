@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -454,7 +454,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="likeCount" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dl8-rX-CpK">
-                                                            <rect key="frame" x="209.5" y="69.5" width="45" height="30"/>
+                                                            <rect key="frame" x="210" y="69.5" width="45" height="30"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="dl8-rX-CpK" secondAttribute="height" multiplier="3:2" id="G40-ji-S8s"/>
                                                             </constraints>
@@ -463,14 +463,14 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gLN-Jd-BF5">
-                                                            <rect key="frame" x="179.5" y="69.5" width="30" height="30"/>
+                                                            <rect key="frame" x="180" y="69.5" width="30" height="30"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="gLN-Jd-BF5" secondAttribute="height" multiplier="1:1" id="mda-9f-Igx"/>
                                                             </constraints>
                                                             <state key="normal" image="dislike"/>
                                                         </button>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wTq-Wq-xce">
-                                                            <rect key="frame" x="264.5" y="0.0" width="110" height="110"/>
+                                                            <rect key="frame" x="265" y="0.0" width="110" height="110"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="wTq-Wq-xce" secondAttribute="height" multiplier="1:1" id="Ns8-P1-g4F"/>
                                                             </constraints>
