@@ -1,5 +1,9 @@
 #AC Final Project - Lunttery
 
+![Imgur](http://i.imgur.com/JxVAE6Bl.png)  
+![Imgur](http://i.imgur.com/rYbSvQxl.png)
+
+
 ###記錄一些在製作這個App時遇到的需求或問題 & 參考的資料/解決方法
 
 ## sidebar menu
